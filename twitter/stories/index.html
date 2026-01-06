@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stories</title>
+    <style>
+        :root {
+            --bg: #fff;
+            --text: #1a1a1a;
+            --secondary: #666;
+            --border: #e1e1e1;
+            --link: #1d9bf0;
+            --card-bg: #f7f7f7;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #15202b;
+                --text: #e7e9ea;
+                --secondary: #8b98a5;
+                --border: #38444d;
+                --link: #1d9bf0;
+                --card-bg: #1e2732;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        a { color: var(--link); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        nav {
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            z-index: 100;
+            margin-bottom: 20px;
+            padding: 15px 0 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        nav a { margin-right: 15px; }
+        h1 { margin-bottom: 10px; }
+        h2 { margin: 20px 0 10px; font-size: 1.3em; }
+        .meta { color: var(--secondary); font-size: 0.9em; margin-bottom: 20px; }
+        .tweet-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .tweet-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .author-info { flex: 1; }
+        .author-name { font-weight: bold; }
+        .author-handle { color: var(--secondary); }
+        .tweet-text {
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .tweet-media {
+            margin-bottom: 15px;
+        }
+        .tweet-media img {
+            max-width: 100%;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        .tweet-media video {
+            max-width: 100%;
+            border-radius: 12px;
+        }
+        .tweet-stats {
+            color: var(--secondary);
+            font-size: 0.85em;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .tweet-links {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+        .category-tag {
+            display: inline-block;
+            background: var(--link);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .summary {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: 1em;
+        }
+        .search-container {
+            position: relative;
+        }
+        .search-results {
+            color: var(--secondary);
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 0 0 8px 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 50;
+        }
+        .search-suggestions div {
+            padding: 8px 10px;
+            cursor: pointer;
+        }
+        .search-suggestions div:hover,
+        .search-suggestions div.selected {
+            background: var(--link);
+            color: white;
+        }
+        .search-suggestions .match-count {
+            color: var(--secondary);
+            font-size: 0.8em;
+            float: right;
+        }
+        .timeline-nav {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+        .year-row, .month-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .year-link, .month-link {
+            cursor: pointer;
+            color: var(--link);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+        .year-link:hover, .month-link:hover {
+            background: var(--link);
+            color: white;
+        }
+        .year-link.active {
+            background: var(--link);
+            color: white;
+        }
+        .month-row {
+            margin-top: 8px;
+            padding: 8px;
+            background: var(--bg);
+            border-radius: 4px;
+        }
+        .filter-bar, .month-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .filter-btn {
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--card-bg);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 0.85em;
+        }
+        .filter-btn:hover {
+            border-color: var(--link);
+        }
+        .filter-btn.active {
+            background: var(--link);
+            color: white;
+            border-color: var(--link);
+        }
+        /* Story styles */
+        .summary-narrative {
+            font-size: 1.05em;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+        }
+        .story-timeline {
+            position: relative;
+            padding: 20px 0;
+            margin: 30px 0;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+        .timeline-event {
+            position: relative;
+            margin-left: 50px;
+            margin-bottom: 20px;
+        }
+        .event-dot {
+            position: absolute;
+            left: -38px;
+            top: 15px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--link);
+            border: 3px solid var(--bg);
+        }
+        .event-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .event-header {
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 10px;
+        }
+        .event-header:hover {
+            background: rgba(29, 155, 240, 0.1);
+        }
+        .event-date {
+            color: var(--secondary);
+            font-size: 0.85em;
+            min-width: 120px;
+        }
+        .event-title {
+            flex: 1;
+            margin: 0;
+            font-size: 1.1em;
+        }
+        .event-count {
+            color: var(--secondary);
+            font-size: 0.85em;
+        }
+        .event-content {
+            display: none;
+            padding: 0 15px 15px;
+            border-top: 1px solid var(--border);
+        }
+        .event-card.expanded .event-content {
+            display: block;
+        }
+        .event-summary {
+            margin-bottom: 15px;
+        }
+        .event-media {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+        .event-media img, .event-media video {
+            height: 100px;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        .event-tweets-link {
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .stories-toc {
+            display: grid;
+            gap: 20px;
+        }
+        .category-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px 20px;
+        }
+        .category-section h3 {
+            margin: 0 0 10px;
+        }
+        .year-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .year-links a {
+            padding: 5px 12px;
+            background: var(--bg);
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        /* Collapsible bookmark sections */
+        .bookmark-section {
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .section-header {
+            position: sticky;
+            top: 0;
+            background: var(--card-bg);
+            padding: 12px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 10;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-header:hover {
+            background: rgba(29, 155, 240, 0.1);
+        }
+        .section-toggle {
+            transition: transform 0.2s;
+            font-size: 0.8em;
+        }
+        .bookmark-section:not(.collapsed) .section-toggle {
+            transform: rotate(90deg);
+        }
+        .section-title {
+            font-weight: 600;
+            flex: 1;
+        }
+        .section-count {
+            color: var(--secondary);
+            font-size: 0.9em;
+        }
+        .section-content {
+            display: none;
+        }
+        .bookmark-section:not(.collapsed) .section-content {
+            display: block;
+        }
+        .bookmark-section:not(.collapsed) .section-header {
+            border-bottom: 1px solid var(--border);
+        }
+        .bookmark-section.collapsed .section-header {
+            border-bottom: none;
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="../index.html">Chronological</a>
+        <a href="../categories/index.html">Categories</a>
+        <a href="../timeline/index.html">Timeline</a>
+        <a href="index.html">Stories</a>
+    </nav>
+    
+<h1>Stories</h1>
+<p class="meta">AI-generated narratives of your bookmarks by category and year</p>
+<div class="stories-toc">
+
+<div class="category-section">
+    <h3><a href="../categories/ai-machine-learning.html">AI & Machine Learning</a></h3>
+    <div class="year-links">
+        <a href="ai-machine-learning/2026.html">2026 (21 bookmarks)</a>
+<a href="ai-machine-learning/2025.html">2025 (466 bookmarks)</a>
+<a href="ai-machine-learning/2024.html">2024 (43 bookmarks)</a>
+<a href="ai-machine-learning/2023.html">2023 (27 bookmarks)</a>
+    </div>
+</div>
+</div>
+
+    <script>
+    // Toggle collapsible bookmark sections
+    function toggleSection(header) {
+        const section = header.closest('.bookmark-section');
+        section.classList.toggle('collapsed');
+    }
+
+    // Open a specific section and scroll to it
+    function openSection(eventId) {
+        const section = document.getElementById('section-' + eventId);
+        if (section) {
+            section.classList.remove('collapsed');
+            setTimeout(() => section.scrollIntoView({behavior: 'smooth', block: 'start'}), 100);
+        }
+    }
+
+    // Handle hash navigation on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.location.hash && window.location.hash.startsWith('#section-')) {
+            const sectionId = window.location.hash.substring(1);
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.remove('collapsed');
+                setTimeout(() => section.scrollIntoView({behavior: 'smooth', block: 'start'}), 100);
+            }
+        }
+    });
+    </script>
+</body>
+</html>

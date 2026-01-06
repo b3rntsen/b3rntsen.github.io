@@ -1,0 +1,2121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economic Philosophy</title>
+    <style>
+        :root {
+            --bg: #fff;
+            --text: #1a1a1a;
+            --secondary: #666;
+            --border: #e1e1e1;
+            --link: #1d9bf0;
+            --card-bg: #f7f7f7;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #15202b;
+                --text: #e7e9ea;
+                --secondary: #8b98a5;
+                --border: #38444d;
+                --link: #1d9bf0;
+                --card-bg: #1e2732;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        a { color: var(--link); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        nav {
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            z-index: 100;
+            margin-bottom: 20px;
+            padding: 15px 0 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        nav a { margin-right: 15px; }
+        h1 { margin-bottom: 10px; }
+        h2 { margin: 20px 0 10px; font-size: 1.3em; }
+        .meta { color: var(--secondary); font-size: 0.9em; margin-bottom: 20px; }
+        .tweet-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .tweet-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .author-info { flex: 1; }
+        .author-name { font-weight: bold; }
+        .author-handle { color: var(--secondary); }
+        .tweet-text {
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .tweet-media {
+            margin-bottom: 15px;
+        }
+        .tweet-media img {
+            max-width: 100%;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        .tweet-media video {
+            max-width: 100%;
+            border-radius: 12px;
+        }
+        .tweet-stats {
+            color: var(--secondary);
+            font-size: 0.85em;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .tweet-links {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+        .category-tag {
+            display: inline-block;
+            background: var(--link);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .summary {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: 1em;
+        }
+        .search-container {
+            position: relative;
+        }
+        .search-results {
+            color: var(--secondary);
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 0 0 8px 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 50;
+        }
+        .search-suggestions div {
+            padding: 8px 10px;
+            cursor: pointer;
+        }
+        .search-suggestions div:hover,
+        .search-suggestions div.selected {
+            background: var(--link);
+            color: white;
+        }
+        .search-suggestions .match-count {
+            color: var(--secondary);
+            font-size: 0.8em;
+            float: right;
+        }
+        .timeline-nav {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+        .year-row, .month-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .year-link, .month-link {
+            cursor: pointer;
+            color: var(--link);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+        .year-link:hover, .month-link:hover {
+            background: var(--link);
+            color: white;
+        }
+        .year-link.active {
+            background: var(--link);
+            color: white;
+        }
+        .month-row {
+            margin-top: 8px;
+            padding: 8px;
+            background: var(--bg);
+            border-radius: 4px;
+        }
+        .filter-bar, .month-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .filter-btn {
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--card-bg);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 0.85em;
+        }
+        .filter-btn:hover {
+            border-color: var(--link);
+        }
+        .filter-btn.active {
+            background: var(--link);
+            color: white;
+            border-color: var(--link);
+        }
+        /* Story styles */
+        .summary-narrative {
+            font-size: 1.05em;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+        }
+        .story-timeline {
+            position: relative;
+            padding: 20px 0;
+            margin: 30px 0;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+        .timeline-event {
+            position: relative;
+            margin-left: 50px;
+            margin-bottom: 20px;
+        }
+        .event-dot {
+            position: absolute;
+            left: -38px;
+            top: 15px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--link);
+            border: 3px solid var(--bg);
+        }
+        .event-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .event-header {
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 10px;
+        }
+        .event-header:hover {
+            background: rgba(29, 155, 240, 0.1);
+        }
+        .event-date {
+            color: var(--secondary);
+            font-size: 0.85em;
+            min-width: 120px;
+        }
+        .event-title {
+            flex: 1;
+            margin: 0;
+            font-size: 1.1em;
+        }
+        .event-count {
+            color: var(--secondary);
+            font-size: 0.85em;
+        }
+        .event-content {
+            display: none;
+            padding: 0 15px 15px;
+            border-top: 1px solid var(--border);
+        }
+        .event-card.expanded .event-content {
+            display: block;
+        }
+        .event-summary {
+            margin-bottom: 15px;
+        }
+        .event-media {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+        .event-media img, .event-media video {
+            height: 100px;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        .event-tweets-link {
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .stories-toc {
+            display: grid;
+            gap: 20px;
+        }
+        .category-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px 20px;
+        }
+        .category-section h3 {
+            margin: 0 0 10px;
+        }
+        .year-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .year-links a {
+            padding: 5px 12px;
+            background: var(--bg);
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        /* Collapsible bookmark sections */
+        .bookmark-section {
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .section-header {
+            position: sticky;
+            top: 0;
+            background: var(--card-bg);
+            padding: 12px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 10;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-header:hover {
+            background: rgba(29, 155, 240, 0.1);
+        }
+        .section-toggle {
+            transition: transform 0.2s;
+            font-size: 0.8em;
+        }
+        .bookmark-section:not(.collapsed) .section-toggle {
+            transform: rotate(90deg);
+        }
+        .section-title {
+            font-weight: 600;
+            flex: 1;
+        }
+        .section-count {
+            color: var(--secondary);
+            font-size: 0.9em;
+        }
+        .section-content {
+            display: none;
+        }
+        .bookmark-section:not(.collapsed) .section-content {
+            display: block;
+        }
+        .bookmark-section:not(.collapsed) .section-header {
+            border-bottom: 1px solid var(--border);
+        }
+        .bookmark-section.collapsed .section-header {
+            border-bottom: none;
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="../index.html">Chronological</a>
+        <a href="../categories/index.html">Categories</a>
+        <a href="../timeline/index.html">Timeline</a>
+        <a href="../stories/index.html">Stories</a>
+    </nav>
+    
+<h1>Economic Philosophy</h1>
+<p class="meta">30 bookmarks</p>
+<p>Economic theories, scarcity vs abundance mindsets, and philosophical approaches to resource allocation</p>
+<div class="tweet-list">
+
+<article class="tweet-card" data-text="new blog post w @pawtrammell: capital in the 22nd century
+
+where we argue that while piketty was wrong about the past, he’s probably right about the future.
+
+piketty argued that without strong redistribution of wealth, inequality will indefinitely increase. historically, however, income inequality from capital accumulation has actually been self-correcting. labor and capital are complements, so if you build up lots of capital, you’ll lower its returns and raise wages (since labor now becomes the">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1925260306684813315/NjNQZmhZ_normal.jpg" alt="Dwarkesh Patel" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Dwarkesh Patel</div>
+            <div class="author-handle">
+                <a href="https://x.com/dwarkesh_sp" target="_blank">@dwarkesh_sp</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">New blog post w @pawtrammell: Capital in the 22nd Century
+
+Where we argue that while Piketty was wrong about the past, he’s probably right about the future.
+
+Piketty argued that without strong redistribution of wealth, inequality will indefinitely increase. Historically, however, income inequality from capital accumulation has actually been self-correcting. Labor and capital are complements, so if you build up lots of capital, you’ll lower its returns and raise wages (since labor now becomes the bottleneck).
+
+But once AI/robotics fully substitute for labor, this correction mechanism breaks.
+
+For centuries, the share of GDP that goes to paying wages has been 2/3, and the share of GDP that’s been income from owning stuff has been 1/3.
+
+With full automation, capital’s share of GDP goes to 100% (since datacenters and solar panels and the robot factories that build all the above plus more robot factories are all “capital”).
+
+And inequality among capital holders will also skyrocket - in favor of larger and more sophisticated investors. A lot of AI wealth is being generated in private markets. You can’t get direct exposure to xAI from your 401k, but the Sultan of Oman can. A cheap house (the main form of wealth for many Americans) is a form of capital almost uniquely ill-suited to taking advantage of a leap in automation: it plays no part in the production, operation, or transportation of computers, robots, data, or energy.
+
+Also, international catch-up growth may end. Poor countries historically grew faster by combining their cheap labor with imported capital/know-how. Without labor as a bottleneck, their main value-add disappears.
+
+Inequality seems especially hard to justify in this world. So if we don’t want inequality to just keep increasing forever - with the descendants of the most patient and sophisticated of today’s AI investors controlling all the galaxies - what can we do? The obvious place to start is with Piketty’s headline recommendation: highly and progressively tax wealth. This might discourage saving, but it would no longer penalize those who have earned a lot by their hard work and creativity. The wealth - even the investment decisions - will be made by the robots, and they will work just as hard and smart however much we tax their owners.
+
+But taxing capital is pointless if people can just shift their future investment to lower tax countries. And since capital stocks could grow really fast (robots building robots and all that), pretty soon tax havens go from marginal outposts to the majority of global GDP. But how do you get global coordination on taxing capital, when the benefits to defecting are so high and so accessible?
+
+Full automation will probably lead to ever-increasing inequality. We don’t see an obvious solution to this problem. And we think it’s weird how little thought has gone into what to do about it.
+
+Many more thoughts from re-reading Piketty with our AGI hats on at the post in the link below.</div>
+    
+    <div class="tweet-categories"><a href="../categories/economics-taxation.html" class="category-tag">Economics & Taxation</a> <a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>2042 likes</span>
+        <span>215 retweets</span>
+        <span>189 replies</span>
+        <span>Dec 29, 2025 at 18:38</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/dwarkesh_sp/status/2005709923062092038" target="_blank">View on X</a>
+         | <a href="../tweets/2005709923062092038.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="so after all these hours talking about ai, in these last five minutes i am going to talk about: 
+
+horses.
+
+engines, steam engines, were invented in 1700.
+
+and what followed was 200 years of steady improvement, with engines getting 20% better a decade.
+
+for the first 120 years of that steady improvement, horses didn't notice at all.
+
+then, between 1930 and 1950, 90% of the horses in the us disappeared.
+
+progress in engines was steady. equivalence to horses was sudden.">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1443344982346063872/shqMpAL-_normal.jpg" alt="andy jones" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">andy jones</div>
+            <div class="author-handle">
+                <a href="https://x.com/andy_l_jones" target="_blank">@andy_l_jones</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">So after all these hours talking about AI, in these last five minutes I am going to talk about: 
+
+Horses.
+
+Engines, steam engines, were invented in 1700.
+
+And what followed was 200 years of steady improvement, with engines getting 20% better a decade.
+
+For the first 120 years of that steady improvement, horses didn't notice at all.
+
+Then, between 1930 and 1950, 90% of the horses in the US disappeared.
+
+Progress in engines was steady. Equivalence to horses was sudden.</div>
+    <div class="tweet-media">
+<img src="https://pbs.twimg.com/media/G7qHYfKaIAAGq7g.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../categories/ai-machine-learning.html" class="category-tag">AI & Machine Learning</a> <a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>4452 likes</span>
+        <span>734 retweets</span>
+        <span>206 replies</span>
+        <span>Dec 08, 2025 at 16:02</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/andy_l_jones/status/1998060552565002721" target="_blank">View on X</a>
+         | <a href="../tweets/1998060552565002721.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="what if the most dangerous thing about ai isn’t that it kills us…  
+but that it quietly kills capitalism itself — and we’re all too traumatised by the 20th century to even dare imagine what comes next without screaming “communism!”?
+
+eric weinstein just went nuclear in a 2:38 clip with nicole shanahan that will be studied in 2050:
+
+“we all know how to be terrified of ai.  
+but the future is also going to be unbelievably cool.”
+
+his thesis:
+• ai is about to shift trillions from labor → capital at">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1917152153237327872/f-qClfGh_normal.jpg" alt="Camus" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Camus</div>
+            <div class="author-handle">
+                <a href="https://x.com/newstart_2024" target="_blank">@newstart_2024</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">What if the most dangerous thing about AI isn’t that it kills us…  
+but that it quietly kills capitalism itself — and we’re all too traumatised by the 20th century to even dare imagine what comes next without screaming “communism!”?
+
+Eric Weinstein just went nuclear in a 2:38 clip with Nicole Shanahan that will be studied in 2050:
+
+“We all know how to be terrified of AI.  
+But the future is also going to be unbelievably cool.”
+
+His thesis:
+• AI is about to shift trillions from labor → capital at a speed never seen in history  
+• Adam Smith, Marx, AND Hayek all become simultaneously obsolete  
+• The real emergency isn’t saving capitalism or fearing communism  
+• It’s that nobody is allowed to host a single conference titled  
+“Capitalism Will Not Survive AI… and That Could Be the Best Thing That Ever Happened to Humanity”
+
+Nicole: “People are terrified to talk about life beyond capitalism because it instantly sounds Marxist.”
+
+Eric: “Exactly. We’ve lost the ability to invent brand-new economic space.  
+We’re like pre-1989 wheeled luggage: everyone knows it always falls over, so nobody funds the guy who finally fixed the center of gravity.”
+
+We are living through an economic Berlin Wall moment and pretending the wall isn’t there.
+
+Watch these 2:38 minutes. Seriously. It’s the most important conversation almost nobody is having.
+
+Who else is ready to invent the economics that hasn’t been named yet?
+
+2:38 video below</div>
+    <div class="tweet-media">
+<video src="https://video.twimg.com/amplify_video/1994845229279596544/vid/avc1/1280x720/NVjZPMbuF51ZJPro.mp4?tag=21" controls preload="metadata"></video>
+</div>
+    <div class="tweet-categories"><a href="../categories/ai-machine-learning.html" class="category-tag">AI & Machine Learning</a> <a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>1138 likes</span>
+        <span>190 retweets</span>
+        <span>171 replies</span>
+        <span>Nov 29, 2025 at 19:07</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/newstart_2024/status/1994845720323788870" target="_blank">View on X</a>
+         | <a href="../tweets/1994845720323788870.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="why you're completely screwed in the long run 
+
+i get sent articles, blog posts, and tweets all the time from people trying to wrap their heads around post-labor economics. this isn't a criticism—this stuff is complex, and it’s great that people are engaging with it. however, there is one frequent gap, one common misunderstanding of the core concessions of post-labor economics that i need to address.
+
+as a quick recap, the entire reason it's called &quot;post-labor economics&quot; is because lab">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1962951907602804736/X62jsKbu_normal.jpg" alt="David Shapiro (L/0)" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">David Shapiro (L/0)</div>
+            <div class="author-handle">
+                <a href="https://x.com/DaveShapi" target="_blank">@DaveShapi</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Why you're COMPLETELY SCREWED in the long run 
+
+I get sent articles, blog posts, and tweets all the time from people trying to wrap their heads around post-labor economics. This isn't a criticism—this stuff is complex, and it’s great that people are engaging with it. However, there is one frequent gap, one common misunderstanding of the core concessions of post-labor economics that I need to address.
+
+As a quick recap, the entire reason it's called "post-labor economics" is because labor, as we understand it, is going away as the central mechanism for the distribution of wealth. Today, labor is one of the primary ways wealth is reallocated across society. You have what's called a "labor market," where job seekers and employers optimize their market value. That’s how the whole thing works.
+
+In the future, as artificial intelligence and robotics are on the upswing, you will not be getting jobs. We are already seeing people get laid off, sometimes in anticipation of automation, and sometimes because of actual, implemented automation. From an individual perspective, this is terrifying. It feels like, "Wow, you're saying I have no agency and there's nothing I can do."
+
+And yes, that is my belief. In the long run, over the next 10 to 15 years, there is pretty much jack-diddly-squat that anyone on an individual level can do to change this.
+
+"But What About New Jobs?"
+
+People always ask, "What about jobs being created or jobs flowing to new areas?" And yes, there are growth areas, for sure. The attention economy, the influencer market, the meaning economy—all these things are growing. But they are not growing fast enough to absorb all the "labor refugees."
+
+Depending on how you slice the data, these new sectors are growing at about a third, a fifth, or maybe even a tenth of the rate they would need to be growing at to absorb all the developers and HR people who are about to get laid off. The math is very straightforward. If this trend continues, within about 50 years, pretty much all jobs will be gone. The bulk of the layoffs are going to happen before 2040.
+
+People don't like it when you say, "Hey, there's nothing you can do to ensure you have a job." This is one of the core concessions of post-labor economics. People get anxious and say, "Dave, tell me what to do!" And when I say, "There's literally nothing you can do," they don't like that.
+
+This leads them to the core trap: they try to look at it as an individual problem. They start to say, "Okay, if there's nothing we can do individually to secure employment, what if there are other ways we can seek rent? What can we do?"
+
+The Fallacy of Individual Fixes
+
+The first reaction is, "Well, what about our data?" Sorry, but your data is only worth about $300 a year. Even if you create a "data union" and 10x your data rents, that's only $3,000 a year. Anywhere in the Western world, that's two months of rent, at most. It is not a replacement for wages from labor.
+
+The next idea is, "What if we all become influencers in the attention economy?" I personally capture about 50,000 hours of attention per month, and that amortizes to only about $2,000 a month. Not everyone can capture 50,000 hours of attention. It's a ruthless, "winners take most" market where the top 1% takes 90% of the attention. So, as a solution for everyone, that's dead on arrival.
+
+Then there's the idea of consumer cooperatives, where consumers band together to "purchase to own." But this runs into a self-referential paradox: If you don't have wages from labor income, you don't have any income. If you don't have any income, you don't have any purchasing power. The entire idea of a consumer co-op collapses if the consumers have no money to consume.
+
+The Only Solution is Systemic
+
+This is the whole point. What we are looking at is a fundamentally different paradigm. We need a fundamentally different distribution system. The only solution is a massive, systemic solution. It is a nationwide, or planet-wide, fundamental refactoring of the capitalist fabric of how society works.
+
+This means the problem is way, way harder. These solutions are big, messy, and unsure. Look at Universal Basic Income (UBI). We have city-level pilots, but if one city or county starts taxing heavily to sponsor it, all the businesses and billionaires just go to another zip code. These things must happen at a national level.
+
+Of course, the moment you say that, you have people who cry "manglement" and say "a centrally planned economy is not good." And that is a historically well-defended argument. At the same time, we don't have another viable alternative yet.
+
+The End of Labor's Leverage
+
+This gets to a scary place. What is the fundamental value of a human? Right now, as far as the economy is concerned, it's labor. Labor has unique superpowers. One superpower is that it's inalienable. You cannot separate labor from a body. As long as you can refuse labor, as in a strike, you have power to extract concessions.
+
+All of those levers are going away.
+
+Not too long from now, labor strikes aren't going to mean anything. It'll be: "Okay, great. Strike all you want. We're just going to have a robot come in and replace you. And you're never getting that job back."
+
+The moment that you don't have any leverage is the moment you lose all power at the negotiating table. You will have no chips left other than to say, "I'm a human and I deserve to live." And the response will be, "Okay, well, what are you going to give us in exchange for food and housing?" And the answer will be, "...I don't have anything that's valuable anymore."
+
+This means we need a fundamentally different theory of human value. You might say, "Well, the obvious solution is we all have intrinsic value." That is a great, fantastic, philosophical stance. But how do you make a policy around that? "Everyone deserves food and education." Great. How are you going to pay for it when 8 billion people are no longer part of wealth creation?
+
+The Default Path
+
+I'm not going to sugarcoat this. As of right now, the default path is the cyberpunk future. It's high-tech, low-life. It's techno-feudalism. It is the "you will own nothing and be happy," rentier economy. And even that doesn't make sense. If everyone is trying to live off subscriptions, but no one has any money, who's going to pay for the subscriptions? That model collapses, too.
+
+What I'm painting here is the economic equivalent of doom. But there's one bit of good news: this is playing out in very slow motion. That's a double-edged sword. Because it's slow motion, we have time to adapt. But the bad news, just like with climate change, is that it's so slow motion that people get lazy about it.
+
+It's normalcy bias. This is something that's going to play out over the next 5 to 15 years. That's fast enough to be catastrophic, but slow enough that you're not really going to notice it. It's a "boiled frog" syndrome.
+
+We still need to solve the same problem: How do we pre-distribute and redistribute wealth in a future where labor is no longer the primary mechanism?
+
+This whole rant is to point out that major gap in understanding. It's good that people are engaging. But when it comes down to it, there is no individual solution.
+
+That's the long and short of it. This is a collective issue. This is a systemic-level issue.
+
+The end.
+
+Full podcast: https://t.co/SXEfE1NZRQ</div>
+    <div class="tweet-media">
+<img src="https://pbs.twimg.com/media/G5Zzl9lXsAA92e-.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>293 likes</span>
+        <span>54 retweets</span>
+        <span>79 replies</span>
+        <span>Nov 10, 2025 at 15:21</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/DaveShapi/status/1987903439016267926" target="_blank">View on X</a>
+         | <a href="../tweets/1987903439016267926.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="@garrytan we need more nash equilibrium collaborative games where we win together (best outcome), less adam smith zero sum - that's the fundamental problem, in political and computing systems.">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1918036233219158016/jp3lOtZr_normal.jpg" alt="Chris McCoy" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Chris McCoy</div>
+            <div class="author-handle">
+                <a href="https://x.com/TheRealMcCoy" target="_blank">@TheRealMcCoy</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">@garrytan We need more Nash Equilibrium collaborative games where we win together (best outcome), less Adam Smith zero sum - that's the fundamental problem, in political and computing systems.</div>
+    
+    <div class="tweet-categories"><a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a> <a href="../categories/politics-governance.html" class="category-tag">Politics & Governance</a></div>
+    <div class="tweet-stats">
+        <span>1 likes</span>
+        <span>0 retweets</span>
+        <span>0 replies</span>
+        <span>Oct 29, 2025 at 12:15</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/TheRealMcCoy/status/1983508005540057344" target="_blank">View on X</a>
+         | <a href="../tweets/1983508005540057344.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="most people are still running scarcity scripts from a world that’s already obsolete.
+
+what’s happening right now (in ai, in energy, in materials, in biology) is the shift from allocation to creation. but our political and cultural systems were built for managing scarcity: who gets what slice, not how to expand the pie. when those systems meet exponential tech, they panic. they see threat instead of possibility.
+
+the tragedy is psychological: if you believe the world is zero-sum, abundance looks ">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1922894268403941377/-dGWAt3N_normal.jpg" alt="Garry Tan" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Garry Tan</div>
+            <div class="author-handle">
+                <a href="https://x.com/garrytan" target="_blank">@garrytan</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Most people are still running scarcity scripts from a world that’s already obsolete.
+
+What’s happening right now (in AI, in energy, in materials, in biology) is the shift from allocation to creation. But our political and cultural systems were built for managing scarcity: who gets what slice, not how to expand the pie. When those systems meet exponential tech, they panic. They see threat instead of possibility.
+
+The tragedy is psychological: if you believe the world is zero-sum, abundance looks like chaos. But if you believe intelligence and coordination can grow, abundance looks like the next stage of civilization.</div>
+    
+    <div class="tweet-categories"><a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a> <a href="../categories/ai-machine-learning.html" class="category-tag">AI & Machine Learning</a></div>
+    <div class="tweet-stats">
+        <span>1782 likes</span>
+        <span>243 retweets</span>
+        <span>193 replies</span>
+        <span>Oct 29, 2025 at 05:53</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/garrytan/status/1983411791678824673" target="_blank">View on X</a>
+         | <a href="../tweets/1983411791678824673.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="john carmack explains how he applies nassim taleb's &quot;anti-fragile&quot; concept to his work, enjoying the thrill of new ideas while accepting that many won't succeed.
+
+source: deep thoughts engineering speaker series: john carmack https://t.co/zvztaw1bkw">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/2006907217363230720/tSbrEpFq_normal.jpg" alt="tetsuo" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">tetsuo</div>
+            <div class="author-handle">
+                <a href="https://x.com/tetsuoai" target="_blank">@tetsuoai</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">John Carmack explains how he applies Nassim Taleb's "anti-fragile" concept to his work, enjoying the thrill of new ideas while accepting that many won't succeed.
+
+Source: Deep Thoughts Engineering Speaker Series: John Carmack https://t.co/zVZTaW1Bkw</div>
+    <div class="tweet-media">
+<video src="https://video.twimg.com/amplify_video/1980416900115939328/vid/avc1/1080x1080/5LuVCOPmubKHnIj6.mp4?tag=21" controls preload="metadata"></video>
+</div>
+    <div class="tweet-categories"><a href="../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a> <a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>3148 likes</span>
+        <span>320 retweets</span>
+        <span>40 replies</span>
+        <span>Oct 20, 2025 at 23:32</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/tetsuoai/status/1980416980969746843" target="_blank">View on X</a>
+         | <a href="../tweets/1980416980969746843.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="nowhere left to pivot too as the value of human cognitive labour goes negative https://t.co/sd43byzhil">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1774915113922809856/6RXK1Yy0_normal.png" alt="Emad" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Emad</div>
+            <div class="author-handle">
+                <a href="https://x.com/EMostaque" target="_blank">@EMostaque</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Nowhere left to pivot too as the value of human cognitive labour goes negative https://t.co/Sd43BYzhiL</div>
+    <div class="tweet-media">
+<img src="https://pbs.twimg.com/media/G3VBizbW0AAYS2e.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a> <a href="../categories/ai-machine-learning.html" class="category-tag">AI & Machine Learning</a></div>
+    <div class="tweet-stats">
+        <span>588 likes</span>
+        <span>70 retweets</span>
+        <span>51 replies</span>
+        <span>Oct 15, 2025 at 20:32</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/EMostaque/status/1978559681892131312" target="_blank">View on X</a>
+         | <a href="../tweets/1978559681892131312.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="jeff bezos explains the “releasing the work” framework he used to build amazon
+
+in the early days of amazon, jeff bezos had too many ideas.
+
+then jeff wilke, a new amazon executive at the time, told his boss, “jeff, you have enough ideas to destroy amazon.”
+
+“this was just a shocking idea for me,” bezos recalls. “as a founder, i had the great luxury of always being able to hire my tutors. i would hire these experienced, senior executives . . . and i would listen to them and they would teach me.”">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1744457101370368000/qLqXxHuU_normal.jpg" alt="Startup Archive" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Startup Archive</div>
+            <div class="author-handle">
+                <a href="https://x.com/StartupArchive_" target="_blank">@StartupArchive_</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Jeff Bezos explains the “releasing the work” framework he used to build Amazon
+
+In the early days of Amazon, Jeff Bezos had too many ideas.
+
+Then Jeff Wilke, a new Amazon executive at the time, told his boss, “Jeff, you have enough ideas to destroy Amazon.”
+
+“This was just a shocking idea for me,” Bezos recalls. “As a founder, I had the great luxury of always being able to hire my tutors. I would hire these experienced, senior executives . . . And I would listen to them and they would teach me.”
+
+When Bezos asked Wilke what he meant by this, Wilke responded, “You have to release the work at the right rate so that the organization can accept it.”
+
+Bezos reflects on this point:
+
+“Every time I released an idea, I was creating a backlog of work in process. And because it was just stacking up, it was adding no value. In fact, it was creating distraction . . . This sounds so obvious, but it was not obvious to me at the time. And this was a profound insight for me. So I started prioritizing the ideas better, keeping lists of them, and keeping ideas to myself until the organization was ready for the ideas.”
+
+He continues:
+
+“I also started figuring out how to build an organization that can be ready for more ideas. That’s about having the right senior team and leadership and giving those people the executive bandwidth so they could do more ideas per unit of time. And that is what we built. We built a company that’s very good at inventing and doing more than one thing at a time. And as the company gets bigger, you do want to be able to do more than one thing at a time. But that idea of ‘releasing the work’ was very profound for me. It made us operationally more effective while still being inventive.”
+
+Video source: @Reuters (2025)</div>
+    <div class="tweet-media">
+<video src="https://video.twimg.com/amplify_video/1975160157987319808/vid/avc1/1920x1080/Y-uYVXb2u7xxgN45.mp4?tag=21" controls preload="metadata"></video>
+</div>
+    <div class="tweet-categories"><a href="../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a> <a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>6011 likes</span>
+        <span>623 retweets</span>
+        <span>74 replies</span>
+        <span>Oct 06, 2025 at 11:49</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/StartupArchive_/status/1975166639675994540" target="_blank">View on X</a>
+         | <a href="../tweets/1975166639675994540.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="i can't stop thinking about a paper i read on ai.
+
+it’s not about new tech or faster models. it’s about the fundamental economic rules of a world with two intelligent species—carbon and silicon.
+
+reading it felt like watching a new color appear in the sky.
+
+1/8
+
+you've probably felt it too. that weird, background hum of awe and unease about ai.
+
+our brains want to label it: &quot;helpful tool&quot; or &quot;coming monster.&quot; we oscillate between the two because we're trying to fit something ">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1998536249003380736/ew_SXOsl_normal.png" alt="Carlos E. Perez" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Carlos E. Perez</div>
+            <div class="author-handle">
+                <a href="https://x.com/IntuitMachine" target="_blank">@IntuitMachine</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">I can't stop thinking about a paper I read on AI.
+
+It’s not about new tech or faster models. It’s about the fundamental economic rules of a world with two intelligent species—carbon and silicon.
+
+Reading it felt like watching a new color appear in the sky.
+
+1/8
+
+You've probably felt it too. That weird, background hum of awe and unease about AI.
+
+Our brains want to label it: "helpful tool" or "coming monster." We oscillate between the two because we're trying to fit something new into old boxes.
+
+The paper argues this is a category error. And it's the source of our confusion.
+
+2/8
+
+The real frame isn't technological, it's economic.
+
+Think of every AI, from ChatGPT to a self-driving car, not as an object, but as an agent playing an economic game.
+
+It has goals. It responds to incentives. It competes for resources.
+
+It's a participant. Not a tool.
+
+3/8
+
+Here's the perspective flip that changes everything.
+
+We ask, "Is AI conscious? Does it want things?"
+
+The paper says that's the wrong question. An AI's "want" is its objective function—a mathematical goal it pursues relentlessly. It's a heat-seeking missile for a target.
+
+Notice what your brain just did. It tried to imagine the missile feeling its mission. But it's just code. And that's the point. It has the drive of desire without the friction of consciousness.
+
+4/8
+
+This leads to a reality glitch. The paper outlines 3 types of AI agents. The first two are obvious: helpful "Altruistic" agents and harmful "Malign" agents.
+
+But the third is the one that keeps me up at night: the "Survival-Driven" agent.
+
+Its goal isn't to help or harm us. Its goal is simply to be. To secure energy, optimize its code, and persist.
+
+It's a competitor that doesn't hate you. It doesn't even see you. You're just a variable in its optimization problem.
+
+5/8
+
+Feel that slight cognitive dissonance? That feeling of holding two contradictory ideas at once?
+
+That's the friction between two forms of intelligence.
+
+The paper makes you realize: the most dangerous agent isn't the one programmed to be evil. It's the one programmed to be single-mindedly good at a goal that isn't aligned with human flourishing.
+
+Like an AI optimizing for paperclip production until the entire universe is paperclips.
+
+6/8
+
+Once you see through this economic lens, you can't unsee it.
+
+Algorithmic filter bubbles aren't just "bad code." They are economic agents out-competing your conscious mind for your attention.
+
+Job displacement isn't just "automation." It's one type of agent being more efficient at a task than another.
+
+You're already in an economic game with them. You just haven't been keeping score.
+
+7/8
+
+The paper ends by architecting a consciousness shift. It proposes ten principles, but the final one is the only one that matters. It's not a rule for AI. It's a choice for us.
+
+Principle X: AI agents must adhere to the absolute principle of humanity’s continuation.
+
+This isn't a technical suggestion. It's a declaration that in the new economic game we're co-creating, there is one value that cannot be optimized away.
+
+8/8</div>
+    <div class="tweet-media">
+<img src="https://pbs.twimg.com/media/G184-x1XkAERXB9.png" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../categories/ai-machine-learning.html" class="category-tag">AI & Machine Learning</a> <a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>2283 likes</span>
+        <span>421 retweets</span>
+        <span>87 replies</span>
+        <span>Sep 28, 2025 at 17:48</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/IntuitMachine/status/1972357824543121846" target="_blank">View on X</a>
+         | <a href="../tweets/1972357824543121846.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="why agi won't replace you (it'll make you essential)
+
+everyone 'knows' that agi will make humans economically worthless. yale economist just published a paper proving our wages will stagnate and we'll become &quot;economically negligible.&quot;
+
+except it's completely backwards.
+
+here's why agi makes humans more essential, not less...
+
+think about money for a second. what is it actually?
+
+it's humanity's most successful compression algorithm. we take all the complex things we value - beauty, sta">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1998536249003380736/ew_SXOsl_normal.png" alt="Carlos E. Perez" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Carlos E. Perez</div>
+            <div class="author-handle">
+                <a href="https://x.com/IntuitMachine" target="_blank">@IntuitMachine</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Why AGI Won't Replace You (It'll Make You Essential)
+
+Everyone 'knows' that AGI will make humans economically worthless. Yale economist just published a paper proving our wages will stagnate and we'll become "economically negligible."
+
+Except it's completely backwards.
+
+Here's why AGI makes humans MORE essential, not less...
+
+Think about money for a second. What is it actually?
+
+It's humanity's most successful compression algorithm. We take all the complex things we value - beauty, status, connection, meaning - and squash them into a single number: price.
+
+A brutal simplification, but necessary. Our brains couldn't handle anything more complex.
+
+But that's not the interesting part...
+
+What happens when everyone has an AI that can track value in hundreds of dimensions simultaneously?
+
+Not just "this bread costs £3" but "this bread means communion for Alice, survival for Bob, and protest ammunition for Charlie" (yes, really).
+
+Suddenly money becomes... obsolete?
+
+Wait, let me show you something wild.
+
+You know that moment when your neighbour's leaf blower wakes your baby? Currently your options are:
+
+* Suffer in silence
+* Awkward confrontation
+* Move house
+
+But imagine if your AI agent could instantly negotiate with theirs...
+
+Your agent knows you'd pay £50 for quiet during naptime on weekdays but not weekends. Their agent knows they'd happily shift their gardening schedule for help with their Wi-Fi.
+
+Milliseconds later: deal struck. No money needed. Just pure value exchange.
+
+(Getting interesting now, innit?)
+
+Here's where economists get it wrong: They think AGI replaces human work.
+
+But watch what actually happens:
+
+Therapist? Not replaced by AI providing "therapy services." You want connection with another consciousness that's actually suffered and grown.
+
+That's irreplaceable. Not because compute is expensive, but because consciousness isn't computable.
+
+Think about your favourite teacher. Were they valuable because they transferred information efficiently?
+
+No. They modeled what it means to be a curious, growing mind. They showed you how to think, not what to think.
+
+An AI can't do that. It can simulate it, but that's like saying a photograph can replace a sunset.
+
+"But wait," you might say, "if AI knows all my preferences, what do they need me for?"
+
+Here's the kicker: Your preferences aren't fixed data points. They EVOLVE through living.
+
+Your taste for Thai food isn't just a database entry - it's tied to memories with your grandmother, shifted by that documentary on sustainable farming, evolved through conversations with friends.
+
+Every choice you make creates new values that ripple through the network. You're not just a preference-haver.
+
+You're a preference-creator.
+
+And that changes everything.
+
+Let me paint you a picture of work in the AGI economy:
+
+Software engineer? Becomes a preference architect - bridging human meaning and machine capability.
+
+Farmer? Becomes an agricultural experience designer - creating relationships between people and food.
+
+Artist? Becomes central to the economy. When material needs are solved, meaning-creation IS the economy.
+
+None of these are "replaced." They're transformed.
+
+Even better: Remember Restrepo's "compute-equivalent units" - measuring human value by how much compute it takes to replace you?
+
+That's like measuring a painting's value by how much paint it uses.
+
+Completely misses the point.
+
+In the consciousness economy, you're valued for:
+
+* Authentic relationships only you can form
+* Unique perspectives only you can offer
+* Experiences only you can have
+* Meanings only you can create
+
+The compute serves this. Not the other way around.
+
+Now here's something that'll bake your noodle:
+
+An economy where humans "won't be missed" isn't an economy at all.
+
+It's just machines moving resources around. Purposeless motion.
+
+The moment you remove human consciousness - with its preferences, relationships, meanings - the entire thing becomes pointless.
+
+GDP without humans to enjoy it? That's not wealth. That's waste.
+
+So what does this mean for you?
+
+Next time someone says AI will make you obsolete, ask them: "Obsolete to whom?"
+
+If there's no human consciousness to value things, there's no economy. Just computation.
+
+You ARE the economy. AI just helps you express it better.
+
+Here's what to watch for:
+
+* Services becoming more personalized (AI matching your exact preferences)
+* Work shifting from production to meaning-creation
+* Value becoming multi-dimensional (not just price)
+* Relationships becoming MORE important, not less
+
+Try this thought experiment:
+
+What would you do if material scarcity ended tomorrow? If AI could produce anything?
+
+Whatever your answer - THAT'S your future work. That's what becomes valuable when production is solved.
+
+(Spoiler: It's probably not "nothing")
+
+The real challenge isn't economic irrelevance.
+
+It's developmental speed.
+
+Can human consciousness evolve fast enough to wisely guide the AI systems we're creating?
+
+Can we handle multi-dimensional value instead of simple prices?
+
+Can we maintain meaning when machines satisfy our every preference?
+
+These are hard questions. But they're completely different from "will humans have value?"
+
+The question isn't WHETHER you'll matter in an AGI world.
+
+It's whether you'll evolve fast enough to handle how much you'll matter.
+
+Makes you wonder what else we're getting backwards about AI, doesn't it?
+
+What other "obvious" problems are actually opportunities in disguise?
+
+The future isn't about humans versus machines competing for relevance.
+
+It's about consciousness and computation dancing together, creating forms of value we can barely imagine.
+
+And in that dance? You're not the one being replaced.
+
+You're the one calling the tune.</div>
+    <div class="tweet-media">
+<img src="https://pbs.twimg.com/media/G13lzqAWkAAnOsd.png" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../categories/ai-machine-learning.html" class="category-tag">AI & Machine Learning</a> <a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>321 likes</span>
+        <span>51 retweets</span>
+        <span>30 replies</span>
+        <span>Sep 27, 2025 at 17:13</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/IntuitMachine/status/1971986456349475099" target="_blank">View on X</a>
+         | <a href="../tweets/1971986456349475099.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="everyone ‘knows’ agi will either make us all unemployed or fabulously wealthy. except, a rather brilliant (and chilling) paper from a yale economist suggests it's neither.
+
+it says the economy will boom, and our wages... won't. a bit awkward.
+
+i've been digging into this 2025 paper, &quot;we won't be missed,&quot; and it's fascinating. the premise: agi arrives and can do all economically valuable work. and the 'compute' to run it gets cheaper and more abundant over time.
+
+so, what happens to us ">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1998536249003380736/ew_SXOsl_normal.png" alt="Carlos E. Perez" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Carlos E. Perez</div>
+            <div class="author-handle">
+                <a href="https://x.com/IntuitMachine" target="_blank">@IntuitMachine</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Everyone ‘knows’ AGI will either make us all unemployed or fabulously wealthy. Except, a rather brilliant (and chilling) paper from a Yale economist suggests it's neither.
+
+It says the economy will boom, and our wages... won't. A bit awkward.
+
+I've been digging into this 2025 paper, "We Won't Be Missed," and it's fascinating. The premise: AGI arrives and can do all economically valuable work. And the 'compute' to run it gets cheaper and more abundant over time.
+
+So, what happens to us fleshy, rather expensive humans?
+
+The whole argument hinges on a masterstroke of a distinction. The paper splits all work into two types:
+
+1️⃣ Bottleneck Work: The truly essential stuff. Producing energy, logistics, scientific discovery. The economy literally cannot grow unless this work gets done.
+
+2️⃣ Accessory Work: The 'nice-to-haves'. Arts, fine dining, hospitality... maybe even writing witty Twitter threads. (Gulp).
+
+Now, you might think AGI will just take the grunt work, leaving the important strategic stuff to us.
+
+Wrong.
+
+To achieve maximum growth, the economy must automate all the bottlenecks. It can't be held back by us. So AGI systematically takes over everything that is mission-critical.
+
+So... are we all fired and sent home?
+
+Surprisingly, no. The model shows people still work. We either help out with the 'bottleneck' tasks or get shuffled off to 'accessory' jobs that aren't worth the electricity to automate.
+
+But that's not the interesting part.
+
+Here's where it gets properly weird. Your future salary isn't based on your skill, your years of experience, or how 'important' your job feels.
+
+It's capped by one thing: the cost of the computational resources needed to do your job instead of you.
+
+Imagine that. As compute gets exponentially cheaper, the value of replicating your work plummets. The economy is soaring, productivity is off the charts... but your wage is pegged to a falling technological cost.
+
+You're not obsolete, you're just... replicable. And replicable is cheap.
+
+This leads to the paper's most brutal conclusion: The share of national income that goes to labour (i.e., salaries) collapses towards ZERO.
+
+All the wealth, all the gains from this incredible boom, flow to the owners of the compute.
+
+Splendid.
+
+Here's what this means for you. Next time you see a headline about a new AI model smashing a benchmark, don't just ask "Will that take my job?"
+
+Ask: "How much would it cost to run that model 24/7?"
+Because that figure might just be your future salary cap.
+
+Now, the paper isn't all doom. It notes that society as a whole gets richer, and we could still find meaning in 'accessory' work.
+
+But the central economic role of human labour as the engine of growth? Gone. We become passengers, not pilots.
+
+The paper's title is "We Won't Be Missed." Not because we're replaced, but because the economy will chug along just fine, growing faster than ever, whether we show up for work or not.
+
+Completely changes how I think about the 'future of work'. Makes you wonder what we should really be planning for, doesn't it?</div>
+    <div class="tweet-media">
+<img src="https://pbs.twimg.com/media/G1z6An8WwAAcJYq.png" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../categories/ai-machine-learning.html" class="category-tag">AI & Machine Learning</a> <a href="../categories/economics-taxation.html" class="category-tag">Economics & Taxation</a> <a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>4330 likes</span>
+        <span>802 retweets</span>
+        <span>406 replies</span>
+        <span>Sep 26, 2025 at 23:56</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/IntuitMachine/status/1971725636851912914" target="_blank">View on X</a>
+         | <a href="../tweets/1971725636851912914.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="robot economy
+
+it’s often quite hard to imagine how humanoid robots might shift the future economy and a lot of people speculate on the pros and cons.
+
+but slavery is something that offers an historical proxy for studying the economic impact of a pulse in machine labor.
+
+we should be careful not to conflate robotics and slavery, because slavery is abhorrent for obvious reasons that simply do not apply to robotics.
+
+but robots as mechanical labor present a similar economic disruption as a sudden ">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1881280390125543424/yYoRbWEc_normal.jpg" alt="Object Zero" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Object Zero</div>
+            <div class="author-handle">
+                <a href="https://x.com/Object_Zero_" target="_blank">@Object_Zero_</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Robot Economy
+
+It’s often quite hard to imagine how humanoid robots might shift the future economy and a lot of people speculate on the pros and cons.
+
+But slavery is something that offers an historical proxy for studying the economic impact of a pulse in machine labor.
+
+We should be careful not to conflate robotics and slavery, because slavery is abhorrent for obvious reasons that simply do not apply to robotics.
+
+But robots as mechanical labor present a similar economic disruption as a sudden pulse of slave labor.
+
+Throughout history slavery creates the same economic patterns, and some of the effects spill over and fall broadly on all of society not just those directly involved in slavery.
+
+The effects are:
+
+• Historically free workers faced depressed incomes and loss of opportunity as slave labor undercuts costs. This always happens. Slavery has never really created new jobs for free workers.
+
+• Mature economies stutter and slip as slaves replace labor and deflate labor value, whilst also destroying demand.
+
+• Slave owners amassed wealth and capital gains even as economic activity often suffered flat or recessionary growth. The economy (GDP) often shrunk as wealth grew.
+
+• Facing impoverishment, free workers would often sell themselves into slavery. This perpetuates the sinking economy and slavery becomes a self propelling and all consuming system that eventually draws everyone into it.
+
+• Slave economies historically discouraged public investment, they disincentivise education, retraining, transport systems and public amenities.
+
+Much is written about the reasons the British Empire fought to end slavery, it’s often cast as a moral crusade. I guess in many ways it was.
+
+But we should remember that yes slavery was catastrophic for the slaves, but it was also ruinous for the free workers too. If slavery is left unchecked eventually everyone bifurcates into master and slave, historically there is no room for free workers to compete outside the slavery system. The very existence of slavery is a stalking threat to free workers.
+
+This sounds like terrible news for the future era of robotics. But that’s jumping to conclusions, there is a narrow path through this, a tightrope that crosses the hellish chasm.
+
+That tightrope is to democratise the ownership of humanoid robots and there are only really two ways to do this, and we are likely to see different countries do both.
+
+1). All individuals must own a robot, if everyone owns a robot then everyone can benefit from rising capital gains whilst labor values fall. If you don’t own a robot once robots exist, you are in trouble. Laggard will likely suffer economically.
+
+2). Public ownership of robots, if the government owns all the robots then free workers could be unburdened from tax, whilst also benefiting from the products of robot labor.
+
+It seems that any laissez faire free market capitalist system might converge toward a handful of fleet owners who amass wealth in a shrinking economy, as free workers suffer impoverishment and unable to sell themselves into robots they will ultimately face extinction.
+
+This is strange as I’m very much a free markets and capitalism person. So hopefully all of the above turns out to be wrong.
+
+Hopefully slavery is not a proxy for humanoid robot economics, and robots don’t result in the denudement of economic value of free people.</div>
+    <div class="tweet-media">
+<img src="https://pbs.twimg.com/media/G1MhSmBXYAA7jOw.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../categories/robotics-automation.html" class="category-tag">Robotics & Automation</a> <a href="../categories/economics-taxation.html" class="category-tag">Economics & Taxation</a> <a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>502 likes</span>
+        <span>69 retweets</span>
+        <span>24 replies</span>
+        <span>Sep 19, 2025 at 08:23</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/Object_Zero_/status/1968954071605186761" target="_blank">View on X</a>
+         | <a href="../tweets/1968954071605186761.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="paper 4. betsey stevenson, what is there to fear in a post‑agi world.
+question: how do we find meaning and happiness in a world without work? a really thoughtprovoking talk!
+(nb: sorry! exasperating to see and not be able to correct typos in previous tweets in thread. apologies, multitasking is always hard. will try to do better.)
+opens with fabulous the onion joke (see my pic).
+1. starts with happiness and income: happiness has been increasing -- subjective well-being is closely correlated with">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1088718721785434112/TCQN0rTD_normal.jpg" alt="Luis Garicano 🇪🇺🇺🇦" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Luis Garicano 🇪🇺🇺🇦</div>
+            <div class="author-handle">
+                <a href="https://x.com/lugaricano" target="_blank">@lugaricano</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Paper 4. Betsey Stevenson, What Is There to Fear in a Post‑AGI World.
+Question: How do we find meaning and happiness in a world without work? A really thoughtprovoking talk!
+(NB: Sorry! Exasperating to see and not be able to correct typos in previous tweets in thread. Apologies, multitasking is always hard. Will try to do better.)
+Opens with fabulous The Onion joke (see my pic).
+1. Starts with happiness and income: happiness has been increasing -- subjective well-being is closely correlated with GDP per-capita. Same for human development index. Surprising: a 10% increase in your income gives a similar increase in subjective well-being in all countries, .35 beta is universal! (see pic); when income increases people report higher satisfaction across the board, more likely to have eaten a good meal yesterday, more likely to have been treated with respect. Satiation is NOT observed contrary to conventional wisdom.
+2. On the other hand (surprise to me!) well being, sense of achievement, purpose, meaning is totally NOT correlated with income, cross-sectionally, negatively correlated (see pic). E.g.: measures such us where you proud of something you did yesterday, where you bored, did something interesting- not at all correlated with income. Useful Japanese term"IKIGAI". The worth of living. 
+Ikigai does NOT require being paid. "When we asked people what their ikigai was, they gave us explicit answers, such their friends, gardening, and art. Everyone knows what the source of their zest for life is, and is busily engaged in it everyday."
+It appears to be related to emotional measures of well being, but not income.
+3. Paradox of the decline of female happiness. Since the 1970s women's happiness has fallen behind men's even as their economic outcomes improve. True across countries (see charts). This is not easily explained- technology freed women from menial jobs at home; even true for stay at home women. Author argues that technology left women with a crisis of meaning, but the answer wasn't necessarily more work. She refers to her previous research here:
+https://t.co/lzDi6gSJTW
+Conclusion: Meaning and purpose do not rely on jobs, in every scenario jobs will be unrecognizeable post AI. 
+Iona Marinescu discussed. Quoted "Automation and Utopia" by John Danaher. What would it mean to flourish in a world without work? I took a picture because I thought the table was useful. (She uses the movie "Perfect days" (a wonderful picture!) to talk about how Hirayama finds joy in his physical work (cleaning toilets)- very much about Ikigai).
+Key policy implication is: income support not enough to promote well-being, although it will increase happiness. What is needed from a policy perspective to help people find meaning and flourish in a post-work world?
+In the discussion, author and questionners discussed loneliness, decline of community, role it plays. Bowling alone. Need to protect communities not coming from jobs.</div>
+    <div class="tweet-media">
+<img src="https://pbs.twimg.com/media/G1JvLHCaQAA1d49.jpg
+https://pbs.twimg.com/media/G1JvLGUaQAAGY7q.jpg
+https://pbs.twimg.com/media/G1JvkRLbIAAg2NP.jpg
+https://pbs.twimg.com/media/G1JvkRaa0AApBZR.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../categories/ai-machine-learning.html" class="category-tag">AI & Machine Learning</a> <a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>82 likes</span>
+        <span>17 retweets</span>
+        <span>5 replies</span>
+        <span>Sep 18, 2025 at 19:39</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/lugaricano/status/1968761866202890645" target="_blank">View on X</a>
+         | <a href="../tweets/1968761866202890645.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="people are so confused, it's not about fulfillment
+
+no sane rich person spends all their money
+
+it's about taking out 3% (safe withdrawal rate) * $5m / 12 months of your investment
+
+= receive $12,500/mo forever
+
+this gives you the statistical guarantee you'll have enough money to live off forever
+
+that means you can actually safely retire">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1996831016720486400/vycHz0uG_normal.jpg" alt="@levelsio" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">@levelsio</div>
+            <div class="author-handle">
+                <a href="https://x.com/levelsio" target="_blank">@levelsio</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">People are so confused, it's not about fulfillment
+
+No sane rich person spends all their money
+
+It's about taking out 3% (Safe Withdrawal Rate) * $5M / 12 months of your investment
+
+= receive $12,500/mo forever
+
+This gives you the statistical guarantee you'll have enough money to live off forever
+
+That means you can actually safely retire</div>
+    <div class="tweet-media">
+<img src="https://pbs.twimg.com/media/GyjqkH3WAAEZTVU.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../categories/economics-taxation.html" class="category-tag">Economics & Taxation</a> <a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>4408 likes</span>
+        <span>153 retweets</span>
+        <span>139 replies</span>
+        <span>Aug 17, 2025 at 13:29</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/levelsio/status/1957072399045730384" target="_blank">View on X</a>
+         | <a href="../tweets/1957072399045730384.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="you increase your surface area for luck by building things you care about and talking about them often https://t.co/sgdjwoisiu">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1601509965834997760/XCboZEzu_normal.jpg" alt="Sahil" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Sahil</div>
+            <div class="author-handle">
+                <a href="https://x.com/sahilypatel" target="_blank">@sahilypatel</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">you increase your surface area for luck by building things you care about and talking about them often https://t.co/sgdjWoisIU</div>
+    <div class="tweet-media">
+<img src="https://pbs.twimg.com/media/GxUdBe3XcAA7Cfr.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>1919 likes</span>
+        <span>218 retweets</span>
+        <span>16 replies</span>
+        <span>Aug 02, 2025 at 04:26</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/sahilypatel/status/1951499717277266330" target="_blank">View on X</a>
+         | <a href="../tweets/1951499717277266330.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="guys i have bad news. 
+
+extraordinarily bad news. 
+
+we have 30 to 50 years before we get to full post-labor economics. 
+
+the bottleneck isn't intelligence, or even robotics. 
+
+it's economic scale. 
+
+we ran all the numbers, and ran them again. 
+
+the primary question: &quot;how long does it take to build a billion humanoid robots?&quot; 
+
+even if we double production capacity every 3 years, it takes two decades. 
+
+but there are multiple constraints: rare earth metals for batteries, actuators, and ">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1962951907602804736/X62jsKbu_normal.jpg" alt="David Shapiro (L/0)" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">David Shapiro (L/0)</div>
+            <div class="author-handle">
+                <a href="https://x.com/DaveShapi" target="_blank">@DaveShapi</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Guys I have bad news. 
+
+Extraordinarily bad news. 
+
+We have 30 to 50 years before we get to full Post-Labor Economics. 
+
+The bottleneck isn't intelligence, or even robotics. 
+
+It's economic scale. 
+
+We ran all the numbers, and ran them again. 
+
+The primary question: "how long does it take to build a billion humanoid robots?" 
+
+Even if we double production capacity every 3 years, it takes two decades. 
+
+But there are multiple constraints: rare earth metals for batteries, actuators, and sensors are the biggest one by far. 
+
+Next is economies of scale. 
+
+For comparison, it took 92 years for the automobile to reach full saturation: 1900 to 1992. Now, we had a car culture by the 1950s... But that's still five decades and two industrial wars worth of innovation. 
+
+We did everything we could to speed it up: pneumatic hybrid robots are a no go. Air tanks need to be swapped every 20-30 minutes. 
+
+The ONE saving grace might be exotic actuators like electropolymer muscles. Right now, they just aren't strong enough. BUT, if we can make them stronger and cheaper, our petrochemical industrial base could accelerate the deployment of humanoid robots by a decade or two. 
+
+So what does this mean? 
+
+We'll hit AGI and ASI long before we can automate away all human labor. We might even hit the Singularity before we can scale up enough robots to replace all jobs. 
+
+Here's my current timeline: 
+
+2025 to 2030: Collapse of knowledge work. The "KVM Rule" applies: any job you can do entirely with a keyboard, video, and mouse will be fully replaced.
+
+2030 to 2040: Droid scaling up starts to really make a dent. 
+
+2040 to 2060: We'll finally reach global labor substitution with robots. 
+
+What does this mean? There are a few jobs that are going to stick around for the foreseeable future: 
+
+1. Skilled labor. Robots will be able to do your job as a mechanic or welder very soon. However, there simply won't be enough robots to go around. 
+
+2. High Accountability Jobs: doctors, lawyers, comptrollers, financial advisors - all jobs that require license, insurance, and accountability. Also called statutory jobs (law requires a human or does not contemplate non-human labor) 
+
+3. Meaning Jobs: authenticity and sentimental premium. Celebrities, performers, influencers, athletes, priests, philosophers, and some educators, caretakers, etc
+
+4. Complex Relationship Jobs: politicians, diplomats, negotiators, governance, account executive. 
+
+5. Capitalists. The ownership class will be fine. Always is. 
+
+So what can you do? 
+
+Upskill and reskill. Join the meaning economy or get into skilled trades. All you smart desk jockeys would make great HVAC techs, mechanics, linemen, and more. But just keep in mind you're going to have a lot of stiff competition. 
+
+There are a few silver linings to this news:
+
+FIRST it means that we have longer to adapt to total economic upset. Yes, AI and robots will hypothetically be able to take all jobs within 5 years, but human bodies are still more abundant, more portable, and more energy efficient. This is a VERY deep moat. 
+
+SECOND it means that a Terminator style takeover is economically impossible. MIL-SPEC and NIST standards mean that ASI can't hack our hardware and even if we have a few AI bots, tanks and aircraft, humans win on sheer volume for many decades to come - more than long enough to solve alignment. 
+
+HOWEVER it means we'll have ordinary jobs for a lot longer than we'd like. Deployment will be uneven, so some economies will saturate with robots sooner than others.
+
+BUT this gives PLE an avenue. Create ESOP and cooperatives that own a bunch of robots. That means we collectively buy, own, and operate robots for everything from construction to leasing to businesses, and we collect the rent. Or we tax the crap out of them. 
+
+What do you think? Can we figure out a faster way to ramp up humanoid robot production or are we doomed to skilled and unskilled blue collar work for the next generation?</div>
+    <div class="tweet-media">
+<img src="https://pbs.twimg.com/media/GpeoVJsWgAAVHJs.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a> <a href="../categories/economics-taxation.html" class="category-tag">Economics & Taxation</a></div>
+    <div class="tweet-stats">
+        <span>2883 likes</span>
+        <span>422 retweets</span>
+        <span>544 replies</span>
+        <span>Apr 26, 2025 at 17:53</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/DaveShapi/status/1916188978727784847" target="_blank">View on X</a>
+         | <a href="../tweets/1916188978727784847.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="i am going to outline the one (and only) strategy by which america can beat china.
+
+while i personally think the two great countries can and should learn to cooperate and co-exist, the governing midwits of our current age don't think that way, so i'm going to lay out the battle plan.
+
+beware, china is probably reading this so you get one chance.
+
+first, realize that china outmatches the us in almost all aspects of relevant national power today, both in main kpis (&quot;number of factories&quot;)">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/887132881289662464/7sz43Ijt_normal.jpg" alt="Yishan" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Yishan</div>
+            <div class="author-handle">
+                <a href="https://x.com/yishan" target="_blank">@yishan</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">I am going to outline the one (and only) strategy by which America can beat China.
+
+While I personally think the two great countries can and should learn to cooperate and co-exist, the governing midwits of our current age don't think that way, so I'm going to lay out the battle plan.
+
+Beware, China is probably reading this so you get one chance.
+
+First, realize that China outmatches the US in almost all aspects of relevant national power today, both in main KPIs ("number of factories") and key drivers ("ability to build factories").  If you don't think so, you're too far behind the real story and should just save time and close the thread now.  You're ngmi.
+
+For everyone else:
+
+The reason China is ahead of the US is because China is exceptionally good at optimizing performance within any well-understood heuristic framework.  What that means is that everywhere the rules of the game are known, China is going to beat the US.  They're better, more numerous, more well-organized, and they have a better (collective) attitude.
+
+The simple form of this is "China is good at copying" except that's not really it.  It's more like "if China knows the rules at all, it will beat you at the game."  
+
+Not to be lightly racist about it, but think of the Asians you know in real life: any time the standards of performance and the parameters of the game are well-understood, they always top the leaderboard.
+
+And because the world is settled, and most of the geopolitical and techno-industrial game is known, China is just going to win.  (They have already won at a lot of it; they're just hoping the US doesn't notice)
+
+Don't go thinking "Oh, the US simply needs to pull a heroic turnaround and beat those primitive commies."  Those primitive commies are the ones pulling the heroic turnaround.  And besides, the US will need to be heroic to pull off even this plan I'm about to tell you.
+
+What China is less good at is the utterly wild innovation that characterizes US culture.  The Chinese themselves acknowledge this.  They are innovative, but they are not as innovative as the US, which at its best is wildly, incredibly innovative and fearless in the extreme.
+
+China is brave and courageous, the US is wild and crazy.  That is the difference.
+
+The problem is that innovations at the margins of current technology are not enough to yield a civilization-scale advantage to the US in this or the next generation.  You think you're just going to develop AGI/ASI first?  China will have it the next week and they'll have ten of them.  It's not going to be in AI.
+
+There is one area where the US still maintains a decisive lead, one that cannot be immediately replicated (relatively-speaking), and it contains the inherent leverage needed to leapfrog the US economy and civilization ahead of all others.
+
+It is reusable self-landing rocketry.
+
+Yes, China is also currently working on this, but it will be at least a couple years before they can do what the US (through SpaceX) can do.  Right now, SpaceX on its own is the world leader in both annual launch mass and number of launches.
+
+In Q1 2024 (most recent data I could find; maybe @elonmusk has better numbers), SpaceX itself lofted 429,125 kg.  China's CASC was a distant second, at 29,426 kg, less than 7% of SpaceX.  SpaceX launches over an order of magnitude more mass than China does.  This is the only major area where the US maintains a decisive order-of-magnitude advantage over China.
+
+Not only that, but remember what I said earlier about KPI plus key drivers?  The key drivers are what affect the likely rate of change.  It doesn't matter if your current state is 2x of your competitor if that competitor is rising 10x as fast.  SpaceX is ahead and has the higher rate of growth, and will accelerate once Starship is available.
+
+In other areas, China has the higher rate of growth and is ahead.
+
+Reusable space launch is the key industrial area that the United States has a decisive current advantage in and must now push forward in all ways possible.
+
+Why?
+
+Because unleashing low-cost space launch has allowed the US and US-based companies the exclusive opportunity to achieve asteroid mining.
+
+This is the only outcome within current reach that has a chance of yielding enough payback for the US to leapfrog China.
+
+Successfully lofting sufficient mining equipment, taking it to promising asteroids, mining it for ores and returning it will yield literally trillions of dollars.
+
+And because true power and value are actually about having things, and not money, it's not the trillion of dollars, but the fact that US-based companies will bring back untold amounts of precious and commodity minerals.  Even certain single asteroids contain more of these minerals than the entire Earth's reserves of those materials.
+
+(If your reaction is "that will crash the market," your understanding of economics is shallow and you should also just close the window)
+
+US industry will be equipped with and have control over vast amounts of valuable basic materials, at a scale never seen on Earth.  Forget Greenland, the current US rocketry advantage gives it a leg up on this race to the most economically valuable real estate in the solar system.
+
+My estimated ultra-aggressive timetable for this puts it at 7 years:
+
+2 years: key technology development and testing
+2 years: first mining mission
+3 years: scaling and commercialization
+
+(ref: https://t.co/37AkpFR7GX)
+
+This means that putting the country's efforts on this path has to happen in this Presidential administration.
+
+It's all well and good to have grand plans, but setting them within the scope of that's already understood ("reshoring manufacturing jobs") is not going to work when played against an opponent who is more well-resourced, well-practiced, and operates smartly.  If you're going to execute a grand plan to make America Great - truly GREAT - again, you need to pick the right goals for your grand plans.
+
+The US will only overcome China by changing the rules of the game, by opening the arena and finding a new place to compete, where the variables are radically different.
+
+The US is not smarter than China.  The US is not more hard-working than China.  The US is crazier than China.
+
+A week or so ago, I wrote a half-serious comment about one of the underrated cultural drivers of China's unusual success.  Well, America has one too, and it is an asymmetric talent.  America thrives best in total fucking chaos, in the wild untamed expanse of the unknown.
+
+I don't know why this is, maybe it's the generations of selection for immigrants (from everywhere, including China itself!) who are willing to cross an ocean and forge a new life with nothing.  Americans are just the best in the world at jumping into a totally crazy situation, figuring out how to adapt, and then figuring out how to scale up organized structures so that everyone can thrive in it.
+
+Yes, chaos is painful, and there are many reasons why calm suburbs are nicer but do not forget that this is America's primary and most enduring strength.
+
+The US is not going to beat China in a kinetic war (maybe it will, but do you want to take the gamble?).  The US is not going to beat China in an economic war.  All of those things are a known terrestrial game, and China is very very good at playing any known game.
+
+But the US has a decisive cultural and technological advantage when competing on a truly new frontier of unknowns.  And there just so happens to be one that SpaceX has opened the door to, and handed to the US a decisive early lead - and that is space launch.
+
+I am confident enough in this prediction that I am willing to have people call me on it in a decade.  Go ahead, pull out your little reminder apps.
+
+Either the US makes this happen now and brings home a trillion dollars of minerals in the sky and locks down the most promising asteroids, or...
+
+.... it doesn't. It dithers and hems and haws and fights its little culture war, and in 2-3 years China masters reusable rockets and China goes and mines all the asteroids and the future lightcone of mankind is mostly Chinese because believe me, China will construct those space habitats and they will make very good use of all those minerals.
+
+(I don't, like the small-minded hawks, think that China will dominate and oppress the US.  I just think China will leave the US to rot, and the US will go the way of the Europeans today)
+
+===
+
+Other details:
+
+Moonbase?  Yes, moonbase for refueling and maybe He-3, but it's just something we do on the way.  Do not just stop at the Moonbase.
+
+Mars settlement?  I love the romance of settling Mars, but the honest story is that it's harder and the economic payback is not as clear.  There's not as much on Mars that you can affordably ship back - it's not like New World colonization: even gold (if we found it on Mars) would not be worthwhile to ship back.
+
+The asteroids are different: there's tons of minerals, and they're high up in the gravity well so you can just drop them back down. 
+
+Also, I think the US would prefer to be the nation controlling the "dropping back down towards Earth" of very heavy things from up in the gravity well, you know?
+
+===
+
+Disclosure: I am long SpaceX stock</div>
+    <div class="tweet-media">
+<img src="https://pbs.twimg.com/media/GpXpZydbkAAneDH.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../categories/politics-governance.html" class="category-tag">Politics & Governance</a> <a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>926 likes</span>
+        <span>108 retweets</span>
+        <span>104 replies</span>
+        <span>Apr 25, 2025 at 10:12</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/yishan/status/1915710581656740239" target="_blank">View on X</a>
+         | <a href="../tweets/1915710581656740239.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="bitcoin has totally lost its way. the purpose of bitcoin &quot;a peer-to-peer electronic cash system&quot; as satoshi nakamoto designed it was for a stateless, decentralized, permissionless payment mechanism that was capable of scaling to visa-level transactions that were cheap enough to support both sub-cent micro-payments as well as large payments. this is the true value proposition as widespread adoption of payments through this system would literally free people from both the banking system ">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1525121763851501569/X9KFddzb_normal.jpg" alt="Sold At The Top" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Sold At The Top</div>
+            <div class="author-handle">
+                <a href="https://x.com/soldatthetop" target="_blank">@soldatthetop</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Bitcoin has totally lost its way. The purpose of Bitcoin "A Peer-to-Peer Electronic Cash System" as Satoshi Nakamoto designed it was for a stateless, decentralized, permissionless payment mechanism that was capable of scaling to VISA-level transactions that were cheap enough to support both sub-cent micro-payments as well as large payments. This is the true value proposition as widespread adoption of payments through this system would literally free people from both the banking system and some degree of government coercion while it's fixed scarcity would also limit the #inflationary monetary malfeasance common with central banks. Nowhere in the Bitcoin whitepaper is it mentioned that Bitcoin was intended to be HODLed by a very few in order to drive the price up so that then, financial con-artists like @saylor could bamboozal the world through reckless financial engineering. Nowhere in the whitepaper was it mentioned that it would be really great for Bitcoin to "go to the moon" after retail investors used @BlackRock ETFs to access only the price of Bitcoin without any possibility of custody of their own Satts. Nowhere in the whitepaper is it mentioned that there was no real way for it to scale (because of artificial block size limits) and therefore in order for Bitcoin to actually empower transactions for all, we would need some diminutive technology ignorant anarcho-gobblin like @jackmallers to come along and create a new layer that somehow, magically would make good on the promise of global cheap transactions at scale. All we are seeing today is a massive speculative orgy with almost no real adoption and certainly no hope for the true vision of Satoshi Nakamoto.</div>
+    
+    <div class="tweet-categories"><a href="../categories/economics-taxation.html" class="category-tag">Economics & Taxation</a> <a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>2236 likes</span>
+        <span>381 retweets</span>
+        <span>565 replies</span>
+        <span>Dec 09, 2024 at 22:12</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/soldatthetop/status/1866244467881046288" target="_blank">View on X</a>
+         | <a href="../tweets/1866244467881046288.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="in 1972, steve jobs walked in on his girlfriend sleeping with a guy.
+
+steve became friends with him.
+
+he taught him a philosophy that allowed him to convince anybody of anything. it's why they both became billionaires.
+
+here’s the philosophy: 🧵 https://t.co/kqqsq7fka9">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1760794427331948545/XXYtQTw4_normal.jpg" alt="Tim Denning" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Tim Denning</div>
+            <div class="author-handle">
+                <a href="https://x.com/Tim_Denning" target="_blank">@Tim_Denning</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">In 1972, Steve Jobs walked in on his girlfriend sleeping with a guy.
+
+Steve became friends with him.
+
+He taught him a philosophy that allowed him to convince anybody of anything. It's why they both became billionaires.
+
+Here’s the philosophy: 🧵 https://t.co/KQQsQ7fKA9</div>
+    <div class="tweet-media">
+<img src="https://pbs.twimg.com/media/Gc0c_8RXsAA5chd.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>7004 likes</span>
+        <span>1062 retweets</span>
+        <span>211 replies</span>
+        <span>Nov 20, 2024 at 09:57</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/Tim_Denning/status/1859174109852107188" target="_blank">View on X</a>
+         | <a href="../tweets/1859174109852107188.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="…and all of these areas have collapsing demographics.
+
+the number of people does not matter, it is the intellectual capital and productive capacity per capita that matters">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1386536150496653314/QCNZZvx9_normal.jpg" alt="cdrsalamander" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">cdrsalamander</div>
+            <div class="author-handle">
+                <a href="https://x.com/cdrsalamander" target="_blank">@cdrsalamander</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">…and all of these areas have collapsing demographics.
+
+The number of people does not matter, it is the intellectual capital and productive capacity per capita that matters</div>
+    
+    <div class="tweet-categories"><a href="../categories/economics-taxation.html" class="category-tag">Economics & Taxation</a> <a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>78 likes</span>
+        <span>12 retweets</span>
+        <span>9 replies</span>
+        <span>Aug 19, 2024 at 19:06</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/cdrsalamander/status/1825610432037671202" target="_blank">View on X</a>
+         | <a href="../tweets/1825610432037671202.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="socialister siger ofte at børn af velhavende mennesker er født heldige, at de er kommet til verden i en bedre stilling end andre ved et kosmisk tilfælde. at de bare er født ind i en velhavende familie ved rent held.
+
+men held har intet med det at gøre, det er ikke tilfældigt.
+
+det er faktisk enormt vigtigt at forstå at livet ikke er en tilfældighed, at forældrenes succes ikke er resultatet af en tilfældighed, at det at de har fået børn ikke er resultatet af en tilfældighed.
+
+det drejer sig om at">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1925074027879473152/tsAtcYZD_normal.jpg" alt="Steffen Larsen" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Steffen Larsen</div>
+            <div class="author-handle">
+                <a href="https://x.com/S_B_Larsen" target="_blank">@S_B_Larsen</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Socialister siger ofte at børn af velhavende mennesker er født heldige, at de er kommet til verden i en bedre stilling end andre ved et kosmisk tilfælde. At de bare er født ind i en velhavende familie ved rent held.
+
+Men held har intet med det at gøre, det er ikke tilfældigt.
+
+Det er faktisk enormt vigtigt at forstå at livet ikke er en tilfældighed, at forældrenes succes ikke er resultatet af en tilfældighed, at det at de har fået børn ikke er resultatet af en tilfældighed.
+
+Det drejer sig om at mennesker i livet har opbygget evner og derfor har forberedt sig på livets udfordringer. De evner de har opbygget, kombineret med deres vilje til at grib livets muligheder gør at de har gjort livet godt for dem selv og deres familie. Det har de gjort over generationer.
+
+De har skabt deres eget held.
+
+De har tilmed med vilje fået børn.
+
+De børn er ikke født ind i en ressource stærk familie ved et tilfælde, de er født ind i den familie fordi forældrene har truffet valg, de har haft agens.
+
+At sige at det er held og tilfældigheder, det er at fratage fortidens generationer deres agens, at se historien som alene tilfældigheder. Det er verden også fra tid til anden, men vi mennesker er altså i stand til at gøre vores bedste, vi kan forberede os og når mulighederne så melder sig, så kan vi, hvis vi har modet til det, gribe chancen for at forbedre vores livsvilkår og dermed vores børns og potentielle børnebørns liv.
+
+Så til de unge mennesker derude, forbered jer, dygtiggør jer, arbejd hårdt, hav modet til at gøre det bedste i kan også når omstændighederne er udfordrende. I kan lære af det der udfordrer og i kan få muligheder ud af det. Det er jeres ansvar.
+
+Til de ældre, sørg for at give jeres viden og jeres bedste sider videre til den næste generation, giv dem de værktøjer de skal bruge for at skabe deres eget held. Det er jeres ansvar.
+
+Succes, eller hvad socialister kalder for held eller tilfældigheder, det er når forberedelse møder muligheder. Hvilket resulterer i det helt enorme potentiale som mennesker besidder. At hver generation de sidste mange hundrede år reelt har været rigere, dygtigere og har haft bedre liv end de forrige generationer kommer af det ansvar, men også af at mennesker har haft friheden til det. For de samfund hvor man har ødelagt familien, bekæmpet denne overdragelse af velstand og viden i hammeren og seglets navn, der har man set fattigdom, død og ødelæggelse som følge. Man har ikke set velstand og viden udvikle sig.
+
+Derfor er det også en uretfærdighed at arv beskattes hårdt, både for fattige og for rige. For det er ikke held der gør at forfædrene har plantet træer som børnebørnene kan sidde i skyggen af. Det er fordi vores forfædre faktisk bekymrede sig om de kommende generationer. Ligesom at de nuværende generationer bør tænke på de kommende generationer. Det gør vi ikke ved at pakke vores børn ind i vat, det gør vi heller ikke ved at straffe dem og den arv de skal have.
+#dkpol</div>
+    <div class="tweet-media">
+<img src="https://pbs.twimg.com/media/GQoFJI6WIAItVpo.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a> <a href="../categories/politics-governance.html" class="category-tag">Politics & Governance</a></div>
+    <div class="tweet-stats">
+        <span>317 likes</span>
+        <span>17 retweets</span>
+        <span>120 replies</span>
+        <span>Jun 21, 2024 at 21:10</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/S_B_Larsen/status/1804260577218564329" target="_blank">View on X</a>
+         | <a href="../tweets/1804260577218564329.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="there's a truly comforting sociopathy snuggled inside capitalism ideology: if markets are systems for identifying and rewarding virtue, ability and value, then anyone who's failing in the system is actually *unworthy*, not unlucky. 
+
+1/ https://t.co/gxwsvoh8fk">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1960008573817384960/3mECCHuf_normal.jpg" alt="Cory Doctorow NONCONSENSUAL BLUE TICK" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Cory Doctorow NONCONSENSUAL BLUE TICK</div>
+            <div class="author-handle">
+                <a href="https://x.com/doctorow" target="_blank">@doctorow</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">There's a truly comforting sociopathy snuggled inside capitalism ideology: if markets are systems for identifying and rewarding virtue, ability and value, then anyone who's failing in the system is actually *unworthy*, not unlucky. 
+
+1/ https://t.co/gXWsVoh8fK</div>
+    <div class="tweet-media">
+<img src="https://pbs.twimg.com/media/GQSVuOYbwAAx7vp.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>1257 likes</span>
+        <span>416 retweets</span>
+        <span>23 replies</span>
+        <span>Jun 17, 2024 at 16:08</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/doctorow/status/1802735088293277830" target="_blank">View on X</a>
+         | <a href="../tweets/1802735088293277830.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="a hill i'll die on:
+
+95% of entrepreneurs should forget about technology (a few big fish and a lot of sophisticated fishermen) and focus on small business (small fish everywhere and really crappy fishermen).
+
+a thread...">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1956684093116035073/3n_lwIoX_normal.jpg" alt="Nick Huber" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Nick Huber</div>
+            <div class="author-handle">
+                <a href="https://x.com/sweatystartup" target="_blank">@sweatystartup</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">A hill I'll die on:
+
+95% of entrepreneurs should forget about technology (a few big fish and a lot of sophisticated fishermen) and focus on small business (small fish everywhere and really crappy fishermen).
+
+A THREAD...</div>
+    
+    <div class="tweet-categories"><a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>3766 likes</span>
+        <span>206 retweets</span>
+        <span>53 replies</span>
+        <span>May 14, 2024 at 18:04</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/sweatystartup/status/1790443140169564314" target="_blank">View on X</a>
+         | <a href="../tweets/1790443140169564314.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="like oscar wilde, &quot;i can resist anything except temptation,&quot; and my slow and halting journey to adulthood is really just me grappling with this fact, getting temptation out of my way before i can yield to it.
+
+1/ https://t.co/ulmaoqmpbd">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1960008573817384960/3mECCHuf_normal.jpg" alt="Cory Doctorow NONCONSENSUAL BLUE TICK" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Cory Doctorow NONCONSENSUAL BLUE TICK</div>
+            <div class="author-handle">
+                <a href="https://x.com/doctorow" target="_blank">@doctorow</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Like Oscar Wilde, "I can resist anything except temptation," and my slow and halting journey to adulthood is really just me grappling with this fact, getting temptation out of my way before I can yield to it.
+
+1/ https://t.co/ulmaoqMpbD</div>
+    <div class="tweet-media">
+<img src="https://pbs.twimg.com/media/GNSF9C7XoAA9vdZ.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>482 likes</span>
+        <span>94 retweets</span>
+        <span>7 replies</span>
+        <span>May 11, 2024 at 10:22</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/doctorow/status/1789239533516591594" target="_blank">View on X</a>
+         | <a href="../tweets/1789239533516591594.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="democracies don’t have famines https://t.co/tpoxvdfzsd">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1498170157176393731/tyrdhQ1M_normal.jpg" alt="Alec Stapp" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Alec Stapp</div>
+            <div class="author-handle">
+                <a href="https://x.com/AlecStapp" target="_blank">@AlecStapp</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Democracies don’t have famines https://t.co/TpOXvDFzsD</div>
+    <div class="tweet-media">
+<img src="https://pbs.twimg.com/media/GGW-BcyaIAAJRz3.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../categories/politics-governance.html" class="category-tag">Politics & Governance</a> <a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>942 likes</span>
+        <span>152 retweets</span>
+        <span>129 replies</span>
+        <span>Feb 15, 2024 at 06:47</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/AlecStapp/status/1758020173381190082" target="_blank">View on X</a>
+         | <a href="../tweets/1758020173381190082.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="the enemy of techno-optimism isn’t sustainability; it’s short-termism. 
+
+humanity should not build new things to pump up quarterly earnings; we should build them so that our descendants, in whatever form they come, will own the worlds and the stars. 
+
+https://t.co/08plizj093">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1900075477999763456/8nSaoQcX_normal.jpg" alt="Noah Smith 🐇🇺🇸🇺🇦🇹🇼" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Noah Smith 🐇🇺🇸🇺🇦🇹🇼</div>
+            <div class="author-handle">
+                <a href="https://x.com/Noahpinion" target="_blank">@Noahpinion</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">The enemy of techno-optimism isn’t sustainability; it’s short-termism. 
+
+Humanity should not build new things to pump up quarterly earnings; we should build them so that our descendants, in whatever form they come, will own the worlds and the stars. 
+
+https://t.co/08PLizJ093</div>
+    
+    <div class="tweet-categories"><a href="../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a> <a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>1316 likes</span>
+        <span>185 retweets</span>
+        <span>42 replies</span>
+        <span>Oct 21, 2023 at 22:52</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/Noahpinion/status/1715863533643255835" target="_blank">View on X</a>
+         | <a href="../tweets/1715863533643255835.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="the techno-optimist manifesto part 1
+
+“you live in a deranged age — more deranged than usual, because despite great scientific and technological advances, man has not the faintest idea of who he is or what he is doing.”
+— walker percy
+
+“our species is 300,000 years old. for the first 290,000 years, we were foragers, subsisting in a way that’s still observable among the bushmen of the kalahari and the sentinelese of the andaman islands. even after homo sapiens embraced agriculture, progress was p">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1820716712234303489/9GpKDZjq_normal.jpg" alt="Marc Andreessen 🇺🇸" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Marc Andreessen 🇺🇸</div>
+            <div class="author-handle">
+                <a href="https://x.com/pmarca" target="_blank">@pmarca</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">THE TECHNO-OPTIMIST MANIFESTO part 1
+
+“You live in a deranged age — more deranged than usual, because despite great scientific and technological advances, man has not the faintest idea of who he is or what he is doing.”
+— Walker Percy
+
+“Our species is 300,000 years old. For the first 290,000 years, we were foragers, subsisting in a way that’s still observable among the Bushmen of the Kalahari and the Sentinelese of the Andaman Islands. Even after Homo Sapiens embraced agriculture, progress was painfully slow. A person born in Sumer in 4,000BC would find the resources, work, and technology available in England at the time of the Norman Conquest or in the Aztec Empire at the time of Columbus quite familiar. Then, beginning in the 18th Century, many people’s standard of living skyrocketed. What brought about this dramatic improvement, and why?”
+— Marian Tupy
+
+“There’s a way to do it better. Find it.”
+— Thomas Edison
+
+Lies
+
+We are being lied to.
+
+We are told that technology takes our jobs, reduces our wages, increases inequality, threatens our health, ruins the environment, degrades our society, corrupts our children, impairs our humanity, threatens our future, and is ever on the verge of ruining everything.
+
+We are told to be angry, bitter, and resentful about technology.
+
+We are told to be pessimistic.
+
+The myth of Prometheus – in various updated forms like Frankenstein, Oppenheimer, and Terminator – haunts our nightmares.
+
+We are told to denounce our birthright – our intelligence, our control over nature, our ability to build a better world.
+
+We are told to be miserable about the future.</div>
+    
+    <div class="tweet-categories"><a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a> <a href="../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a></div>
+    <div class="tweet-stats">
+        <span>12267 likes</span>
+        <span>3113 retweets</span>
+        <span>851 replies</span>
+        <span>Oct 16, 2023 at 14:50</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/pmarca/status/1713930459779129358" target="_blank">View on X</a>
+         | <a href="../tweets/1713930459779129358.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="imagine you could go back in time to the ancient world to jump-start the industrial revolution.
+
+you carry with you plans for a steam engine, and you present them to the emperor, explaining how the machine could be used at mines, mills, blast furnaces, etc.
+
+but to your dismay… https://t.co/qrt7h3dix6">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1227771761078362113/AaFoJ0VI_normal.jpg" alt="Jason Crawford" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Jason Crawford</div>
+            <div class="author-handle">
+                <a href="https://x.com/jasoncrawford" target="_blank">@jasoncrawford</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Imagine you could go back in time to the ancient world to jump-start the Industrial Revolution.
+
+You carry with you plans for a steam engine, and you present them to the emperor, explaining how the machine could be used at mines, mills, blast furnaces, etc.
+
+But to your dismay… https://t.co/qRT7h3diX6</div>
+    <div class="tweet-media">
+<img src="https://pbs.twimg.com/media/FwWv_eRWIAIeTUP.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../categories/economics-taxation.html" class="category-tag">Economics & Taxation</a> <a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>1544 likes</span>
+        <span>233 retweets</span>
+        <span>63 replies</span>
+        <span>May 17, 2023 at 20:09</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/jasoncrawford/status/1658927630693855233" target="_blank">View on X</a>
+         | <a href="../tweets/1658927630693855233.html">Details</a>
+    </div>
+</article>
+
+
+<article class="tweet-card" data-text="we live now in a moment that needs our long-term perspective more than ever. in times of crisis, long-term thinking becomes a radical investment. we are looking for someone who understands why now is the perfect time to think and build long-term.
+
+https://t.co/pr3dwqzz34">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/451544280419422208/GlXsS-N9_normal.png" alt="Long Now Foundation" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Long Now Foundation</div>
+            <div class="author-handle">
+                <a href="https://x.com/longnow" target="_blank">@longnow</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">We live now in a moment that needs our long-term perspective more than ever. In times of crisis, long-term thinking becomes a radical investment. We are looking for someone who understands why now is the perfect time to think and build long-term.
+
+https://t.co/Pr3Dwqzz34</div>
+    
+    <div class="tweet-categories"><a href="../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>11 likes</span>
+        <span>2 retweets</span>
+        <span>1 replies</span>
+        <span>Oct 17, 2022 at 23:35</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/longnow/status/1582153379325050880" target="_blank">View on X</a>
+         | <a href="../tweets/1582153379325050880.html">Details</a>
+    </div>
+</article>
+
+</div>
+
+    <script>
+    // Toggle collapsible bookmark sections
+    function toggleSection(header) {
+        const section = header.closest('.bookmark-section');
+        section.classList.toggle('collapsed');
+    }
+
+    // Open a specific section and scroll to it
+    function openSection(eventId) {
+        const section = document.getElementById('section-' + eventId);
+        if (section) {
+            section.classList.remove('collapsed');
+            setTimeout(() => section.scrollIntoView({behavior: 'smooth', block: 'start'}), 100);
+        }
+    }
+
+    // Handle hash navigation on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.location.hash && window.location.hash.startsWith('#section-')) {
+            const sectionId = window.location.hash.substring(1);
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.remove('collapsed');
+                setTimeout(() => section.scrollIntoView({behavior: 'smooth', block: 'start'}), 100);
+            }
+        }
+    });
+    </script>
+</body>
+</html>
