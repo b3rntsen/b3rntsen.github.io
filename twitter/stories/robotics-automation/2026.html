@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotics & Automation - 2026</title>
+    <style>
+        :root {
+            --bg: #fff;
+            --text: #1a1a1a;
+            --secondary: #666;
+            --border: #e1e1e1;
+            --link: #1d9bf0;
+            --card-bg: #f7f7f7;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #15202b;
+                --text: #e7e9ea;
+                --secondary: #8b98a5;
+                --border: #38444d;
+                --link: #1d9bf0;
+                --card-bg: #1e2732;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        a { color: var(--link); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        nav {
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            z-index: 100;
+            margin-bottom: 20px;
+            padding: 15px 0 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        nav a { margin-right: 15px; }
+        h1 { margin-bottom: 10px; }
+        h2 { margin: 20px 0 10px; font-size: 1.3em; }
+        .meta { color: var(--secondary); font-size: 0.9em; margin-bottom: 20px; }
+        .tweet-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .tweet-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .author-info { flex: 1; }
+        .author-name { font-weight: bold; }
+        .author-handle { color: var(--secondary); }
+        .tweet-text {
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .tweet-media {
+            margin-bottom: 15px;
+        }
+        .tweet-media img {
+            max-width: 100%;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        .tweet-media video {
+            max-width: 100%;
+            min-height: 200px;
+            border-radius: 12px;
+            background: #1a1a2e;
+        }
+        .video-thumbnail {
+            display: inline-block;
+            text-decoration: none;
+        }
+        .video-placeholder {
+            width: 280px;
+            height: 160px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .video-placeholder:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(29, 155, 240, 0.3);
+        }
+        .play-icon {
+            font-size: 2.5em;
+            color: #1d9bf0;
+        }
+        .video-label {
+            color: #8899a6;
+            font-size: 0.9em;
+        }
+        .video-thumbnail-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            max-width: 100%;
+        }
+        .video-thumbnail-wrapper .video-thumb {
+            max-width: 100%;
+            border-radius: 12px;
+            display: block;
+        }
+        .video-play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .video-thumbnail-wrapper:hover .video-play-overlay {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: rgba(29, 155, 240, 0.9);
+        }
+        .tweet-stats {
+            color: var(--secondary);
+            font-size: 0.85em;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .tweet-links {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+        .category-tag {
+            display: inline-block;
+            background: var(--link);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .summary {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: 1em;
+        }
+        .search-container {
+            position: relative;
+        }
+        .search-options {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        .search-options label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            color: var(--secondary);
+        }
+        .search-options input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+        .search-results {
+            color: var(--secondary);
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        .loading-indicator {
+            text-align: center;
+            padding: 20px;
+            color: var(--secondary);
+        }
+        .loading-indicator.done {
+            color: var(--secondary);
+            font-size: 0.9em;
+        }
+        #scroll-sentinel {
+            height: 1px;
+        }
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 0 0 8px 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 50;
+        }
+        .search-suggestions div {
+            padding: 8px 10px;
+            cursor: pointer;
+        }
+        .search-suggestions div:hover,
+        .search-suggestions div.selected {
+            background: var(--link);
+            color: white;
+        }
+        .search-suggestions .match-count {
+            color: var(--secondary);
+            font-size: 0.8em;
+            float: right;
+        }
+        .timeline-nav {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+        .year-row, .month-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .year-link, .month-link {
+            cursor: pointer;
+            color: var(--link);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+        .year-link:hover, .month-link:hover {
+            background: var(--link);
+            color: white;
+        }
+        .year-link.active {
+            background: var(--link);
+            color: white;
+        }
+        .month-row {
+            margin-top: 8px;
+            padding: 8px;
+            background: var(--bg);
+            border-radius: 4px;
+        }
+        .filter-bar, .month-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .filter-btn {
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--card-bg);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 0.85em;
+        }
+        .filter-btn:hover {
+            border-color: var(--link);
+        }
+        .filter-btn.active {
+            background: var(--link);
+            color: white;
+            border-color: var(--link);
+        }
+        /* Story styles */
+        .summary-narrative {
+            font-size: 1.05em;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+        }
+        .story-timeline {
+            position: relative;
+            padding: 20px 0;
+            margin: 30px 0;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+        .timeline-event {
+            position: relative;
+            margin-left: 50px;
+            margin-bottom: 20px;
+        }
+        .event-dot {
+            position: absolute;
+            left: -38px;
+            top: 15px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--link);
+            border: 3px solid var(--bg);
+        }
+        .event-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .event-header {
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 10px;
+        }
+        .event-header:hover {
+            background: rgba(29, 155, 240, 0.1);
+        }
+        .event-date {
+            color: var(--secondary);
+            font-size: 0.85em;
+            min-width: 120px;
+        }
+        .event-title {
+            flex: 1;
+            margin: 0;
+            font-size: 1.1em;
+        }
+        .event-count {
+            color: var(--secondary);
+            font-size: 0.85em;
+        }
+        .event-content {
+            display: none;
+            padding: 0 15px 15px;
+            border-top: 1px solid var(--border);
+        }
+        .event-card.expanded .event-content {
+            display: block;
+        }
+        .event-summary {
+            margin-bottom: 15px;
+        }
+        .event-media {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+        .event-media img, .event-media video {
+            height: 100px;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        .event-tweets-link {
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .stories-toc {
+            display: grid;
+            gap: 20px;
+        }
+        .category-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px 20px;
+        }
+        .category-section h3 {
+            margin: 0 0 10px;
+        }
+        .year-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .year-links a {
+            padding: 5px 12px;
+            background: var(--bg);
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        /* Collapsible bookmark sections */
+        .bookmark-section {
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .section-header {
+            position: sticky;
+            top: 0;
+            background: var(--card-bg);
+            padding: 12px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 10;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-header:hover {
+            background: rgba(29, 155, 240, 0.1);
+        }
+        .section-toggle {
+            transition: transform 0.2s;
+            font-size: 0.8em;
+        }
+        .bookmark-section:not(.collapsed) .section-toggle {
+            transform: rotate(90deg);
+        }
+        .section-title {
+            font-weight: 600;
+            flex: 1;
+        }
+        .section-count {
+            color: var(--secondary);
+            font-size: 0.9em;
+        }
+        .section-content {
+            display: none;
+        }
+        .bookmark-section:not(.collapsed) .section-content {
+            display: block;
+        }
+        .bookmark-section:not(.collapsed) .section-header {
+            border-bottom: 1px solid var(--border);
+        }
+        .bookmark-section.collapsed .section-header {
+            border-bottom: none;
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="../../index.html">Chronological</a>
+        <a href="../../categories/index.html">Categories</a>
+        <a href="../../timeline/index.html">Timeline</a>
+        <a href="../../stories/index.html">Stories</a>
+        <a href="../authors/index.html">Authors</a>
+    </nav>
+    
+<h1>Robotics & Automation - 2026</h1>
+<p class="meta">11 bookmarks | Generated 2026-01-06</p>
+
+<div class="search-container">
+    <input type="text" id="search-input" class="search-box" placeholder="Search this story..." autocomplete="off">
+    <div class="search-options">
+        <label><input type="checkbox" id="fuzzy-toggle"> Fuzzy matching</label>
+    </div>
+</div>
+<div id="search-results" class="search-results hidden"></div>
+
+<div class="summary-narrative">
+<p><strong>2026: The Year Humanoids Walked Into Our Lives</strong></p>
+<p>If 2025 was the year we talked about humanoid robots, then 2026 was the year we finally watched them walk through our factory doors and living rooms. These eleven bookmarked moments tell the story of a technological tipping point—when bipedal machines stopped being science fiction curiosities and became practical partners in both industry and everyday life.</p>
+<p>The year began with a flurry of excitement in early January, as breakthrough after breakthrough emerged from research labs and manufacturing floors. Within the span of just four days, the robotics world witnessed something unprecedented: humanoid robots weren't just demonstrating impressive capabilities in controlled environments—they were actually being deployed in real industrial settings, tackling complex tasks that had stumped automation for decades.</p>
+<p>What made 2026 truly remarkable wasn't just the sophistication of these machines, but their dual evolution. While industrial humanoids were revolutionizing manufacturing with their human-like dexterity and adaptability, consumer-focused robots were simultaneously making extraordinary leaps toward accessibility. The same fundamental advances in mobility, manipulation, and machine learning that enabled robots to excel in factories were being refined and packaged for homes, creating an unexpected parallel development that few had predicted.</p>
+<p>The bookmarks from this period reveal a fascinating pattern: each industrial breakthrough seemed to accelerate consumer applications, and vice versa. As humanoid robots proved they could handle the unpredictable demands of factory work—navigating tight spaces, manipulating tools designed for human hands, collaborating seamlessly with human workers—the technology became more robust and cost-effective for personal use.</p>
+<p>These curated tweets capture more than just technological progress; they document the moment when humanoid robotics crossed the chasm from experimental to essential. The concentrated timeline—with most bookmarks clustering in those first few pivotal days of January—suggests we're looking at the digital breadcrumbs of someone who recognized they were witnessing history unfold in real-time.</p>
+<p>By year's end, the question was no longer whether humanoid robots would integrate into our world, but how quickly we could adapt to theirs. These bookmarks serve as waypoints along that transformative journey—a personal archive of the year everything changed.</p>
+</div>
+
+<h2>Timeline of Events</h2>
+<div class="story-timeline">
+<div class="timeline-line"></div>
+
+<div class="timeline-event" data-event-id="evt-001">
+    <div class="event-dot"></div>
+    <div class="event-card">
+        <div class="event-header" onclick="this.parentElement.classList.toggle('expanded')">
+            <span class="event-date">January 2 → January 5</span>
+            <h3 class="event-title">Humanoid Robots in Industrial Applications</h3>
+            <span class="event-count">3 bookmarks</span>
+        </div>
+        <div class="event-content">
+            <p class="event-summary">These bookmarks capture a pivotal moment in robotics where humanoid robots are finally breaking out of labs and into real industrial work. From Boston Dynamics' Atlas autonomously sorting car parts in Hyundai's factory to specialized robots navigating the tight, chaotic spaces of construction sites that traditional cranes can't reach, 2026 appears to be the year humanoid robots proved their worth in genuinely demanding environments. The emergence of rugged, industrial-focused companies like Texas-based Persona AI signals a shift from research novelties to purpose-built workhorses designed to survive the brutal realities of shipyards and construction zones.</p>
+            <div class="event-media"><video src="https://via.placeholder.com/400x300?text=Media+Unavailable&2006935480273641492/DdD0zkAMBkMLkmNz.mp4" preload="metadata"></video>
+<video src="https://via.placeholder.com/400x300?text=Media+Unavailable&2007414209684844941/PPzXa4vOGVJv-VTi.mp4" preload="metadata"></video>
+<video src="https://via.placeholder.com/400x300?text=Media+Unavailable&2008025486405124274/_kCZ0ytlqaYEQtm-.mp4" preload="metadata"></video></div>
+            <a href="#section-evt-001" class="event-tweets-link" onclick="openSection('evt-001')">View tweets below</a>
+        </div>
+    </div>
+</div>
+
+<div class="timeline-event" data-event-id="evt-002">
+    <div class="event-dot"></div>
+    <div class="event-card">
+        <div class="event-header" onclick="this.parentElement.classList.toggle('expanded')">
+            <span class="event-date">January 2 → January 4</span>
+            <h3 class="event-title">Personal and Consumer Humanoid Robot Development</h3>
+            <span class="event-count">3 bookmarks</span>
+        </div>
+        <div class="event-content">
+            <p class="event-summary">This collection captures the exciting convergence of humanoid robotics becoming more accessible and sophisticated in early 2026. The bookmarks highlight three key breakthroughs: PrimeBOT's compact Q1 robot bringing open-source humanoid companions into homes, Unitree's robots advancing to the point where they can serve as workout partners, and Chinese researchers developing revolutionary "nervous system" skin that gives robots more natural, reflexive responses to touch. Together, these developments signal that humanoid robots are rapidly evolving from industrial curiosities to genuine personal companions with increasingly lifelike capabilities.</p>
+            <div class="event-media"><video src="https://via.placeholder.com/400x300?text=Media+Unavailable&2006941478476783923/s_43BV9LJblhd_y7.mp4" preload="metadata"></video>
+<video src="https://via.placeholder.com/400x300?text=Media+Unavailable&2007746313220415717/0akUqKfy3XUpPUZ-.mp4" preload="metadata"></video>
+<img src="https://via.placeholder.com/400x300?text=Media+Unavailable&2007445877397315667/G9vhIrVXgAA_pqL.jpg" loading="lazy"></div>
+            <a href="#section-evt-002" class="event-tweets-link" onclick="openSection('evt-002')">View tweets below</a>
+        </div>
+    </div>
+</div>
+</div>
+
+<h2>All Bookmarks</h2>
+<div class="bookmark-section collapsed" id="section-evt-001">
+    <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-toggle">▶</span>
+        <span class="section-title">Humanoid Robots in Industrial Applications</span>
+        <span class="section-count">(3 bookmarks)</span>
+    </div>
+    <div class="section-content">
+
+<article class="tweet-card" data-text="robots solves the problem of carrying steel beams in construction sites, a job that a normal crane can not do.
+
+the hard part is not lifting the steel beam, it is getting it through the last tight, messy stretch of a residential site.
+https://t.co/2trmlw6ndp">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1816185267037859840/Fd18CH0v_normal.jpg" alt="Rohan Paul" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Rohan Paul</div>
+            <div class="author-handle">
+                <a href="https://x.com/rohanpaul_ai" target="_blank">@rohanpaul_ai</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Robots solves the problem of carrying Steel beams in construction sites, a job that a normal crane can not do.
+
+The hard part is not lifting the steel beam, it is getting it through the last tight, messy stretch of a residential site.
+https://t.co/2tRMLw6NDP</div>
+    <div class="tweet-media">
+<video src="https://via.placeholder.com/400x300?text=Media+Unavailable&2006935480273641492/DdD0zkAMBkMLkmNz.mp4" poster="https://via.placeholder.com/400x300?text=Media+Unavailable&2006935480273641492/thumb_DdD0zkAMBkMLkmNz.jpg" controls preload="none"></video>
+</div>
+    <div class="tweet-categories"><a href="../../categories/robotics-automation.html" class="category-tag">Robotics & Automation</a> <a href="../../categories/design-engineering.html" class="category-tag">Design & Engineering</a></div>
+    <div class="tweet-stats">
+        <span>465 likes</span>
+        <span>35 retweets</span>
+        <span>19 replies</span>
+        <span>Jan 02, 2026 at 03:48</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/rohanpaul_ai/status/2006935480273641492" target="_blank">View on X</a>
+         | <a href="../../tweets/2006935480273641492.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="texas based humanoid company! 🤠
+
+after a year of quiet execution, @nicolausradford shared a first look at @personaaiinc gen-1 humanoid. 
+
+these robots are being designed for hard environments like shipyards, rugged, modular, and built to survive real industrial abuse.
+
+radford laid out a tight 24-month plan: three hardware generations, ending with deployment at a customer site. 
+
+to make that feasible, everything ran in parallel: core tech, hiring, facilities, partnerships, data pipelines, backe">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1945929091875565569/sYEMYrQo_normal.jpg" alt="Lukas Ziegler" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Lukas Ziegler</div>
+            <div class="author-handle">
+                <a href="https://x.com/lukas_m_ziegler" target="_blank">@lukas_m_ziegler</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Texas based humanoid company! 🤠
+
+After a year of quiet execution, @nicolausradford shared a first look at @personaaiinc Gen-1 humanoid. 
+
+These robots are being designed for hard environments like shipyards, rugged, modular, and built to survive real industrial abuse.
+
+Radford laid out a tight 24-month plan: three hardware generations, ending with deployment at a customer site. 
+
+To make that feasible, everything ran in parallel: core tech, hiring, facilities, partnerships, data pipelines, backed early by a $42M pre-seed. 
+
+That kind of compression only works with a team that already knows how to build under pressure.
+
+Starting a humanoid company right now is brutal. The bar has been set extremely high, especially by Chinese teams that have spent years refining locomotion, manipulation, and robustness at scale. 
+
+Against that backdrop, getting to a credible Gen-1 in roughly 12 months is no small thing.
+
+ It’s about execution speed, industrial focus, and showing that serious humanoid development is no longer confined to one part of the world.
+
+Keep pushing guys! 🦾
+
+~~ 
+
+♻️ Join the weekly robotics newsletter, and never miss any news → https://t.co/GoA3ZuwoPB</div>
+    <div class="tweet-media">
+<video src="https://via.placeholder.com/400x300?text=Media+Unavailable&2007414209684844941/PPzXa4vOGVJv-VTi.mp4" poster="https://via.placeholder.com/400x300?text=Media+Unavailable&2007414209684844941/thumb_PPzXa4vOGVJv-VTi.jpg" controls preload="none"></video>
+</div>
+    <div class="tweet-categories"><a href="../../categories/robotics-automation.html" class="category-tag">Robotics & Automation</a></div>
+    <div class="tweet-stats">
+        <span>81 likes</span>
+        <span>15 retweets</span>
+        <span>7 replies</span>
+        <span>Jan 03, 2026 at 11:30</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/lukas_m_ziegler/status/2007414209684844941" target="_blank">View on X</a>
+         | <a href="../../tweets/2007414209684844941.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="news: boston dynamics showed off its new atlas humanoid robot working inside hyundai's car factory, sorting roof racks. they also showed atlas' new three finger hand.
+
+&quot;this is the first time atlas has been out of the lab doing real work. he's working autonomously.&quot; https://t.co/5zqxf3vnpy">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1837744842715082752/xH9vYixL_normal.jpg" alt="Sawyer Merritt" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Sawyer Merritt</div>
+            <div class="author-handle">
+                <a href="https://x.com/SawyerMerritt" target="_blank">@SawyerMerritt</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">NEWS: Boston Dynamics showed off its new Atlas humanoid robot working inside Hyundai's car factory, sorting roof racks. They also showed Atlas' new three finger hand.
+
+"This is the first time Atlas has been out of the lab doing real work. He's working autonomously." https://t.co/5ZQxf3VNpY</div>
+    <div class="tweet-media">
+<video src="https://via.placeholder.com/400x300?text=Media+Unavailable&2008025486405124274/_kCZ0ytlqaYEQtm-.mp4" poster="https://via.placeholder.com/400x300?text=Media+Unavailable&2008025486405124274/thumb__kCZ0ytlqaYEQtm-.jpg" controls preload="none"></video>
+</div>
+    <div class="tweet-categories"><a href="../../categories/robotics-automation.html" class="category-tag">Robotics & Automation</a></div>
+    <div class="tweet-stats">
+        <span>3608 likes</span>
+        <span>423 retweets</span>
+        <span>191 replies</span>
+        <span>Jan 05, 2026 at 03:59</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/SawyerMerritt/status/2008025486405124274" target="_blank">View on X</a>
+         | <a href="../../tweets/2008025486405124274.html">Details</a>
+    </div>
+</article>
+
+    </div>
+</div>
+<div class="bookmark-section collapsed" id="section-evt-002">
+    <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-toggle">▶</span>
+        <span class="section-title">Personal and Consumer Humanoid Robot Development</span>
+        <span class="section-count">(3 bookmarks)</span>
+    </div>
+    <div class="section-content">
+
+<article class="tweet-card" data-text="the first personal humanoid robot of 2026
+
+standing at only 0.8 meters tall, the q1 is from primebot, a joint venture between agibot and shangwei new materials.
+
+it can dance, provide intelligent companionship, and engage in social interaction.  it is completely open-source, allowing individuals without programming skills to design its language style, personality, behaviors, customize its skin, head, and even 3d print its casing... the q1 is aimed at students, geeks, individual developers, and f">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1787109582218919936/u85d-MXW_normal.jpg" alt="CyberRobo" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">CyberRobo</div>
+            <div class="author-handle">
+                <a href="https://x.com/CyberRobooo" target="_blank">@CyberRobooo</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">The first personal humanoid robot of 2026
+
+Standing at only 0.8 meters tall, the Q1 is from PrimeBOT, a joint venture between AgiBOT and Shangwei New Materials.
+
+It can dance, provide intelligent companionship, and engage in social interaction.  It is completely open-source, allowing individuals without programming skills to design its language style, personality, behaviors, customize its skin, head, and even 3D print its casing... The Q1 is aimed at students, geeks, individual developers, and for home education.
+
+The price has not yet been announced. However, as a small, full-body humanoid robot for personal use, it is likely to be much cheaper than many other humanoid robots.
+
+Low-cost, small-sized humanoid robots with low barriers to entry may be key to widespread adoption. While larger humanoid robots can participate in more real-world tasks, smaller ones have significant market development potential.</div>
+    <div class="tweet-media">
+<video src="https://via.placeholder.com/400x300?text=Media+Unavailable&2006941478476783923/s_43BV9LJblhd_y7.mp4" poster="https://via.placeholder.com/400x300?text=Media+Unavailable&2006941478476783923/thumb_s_43BV9LJblhd_y7.jpg" controls preload="none"></video>
+</div>
+    <div class="tweet-categories"><a href="../../categories/robotics-automation.html" class="category-tag">Robotics & Automation</a></div>
+    <div class="tweet-stats">
+        <span>408 likes</span>
+        <span>100 retweets</span>
+        <span>25 replies</span>
+        <span>Jan 02, 2026 at 04:11</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/CyberRobooo/status/2006941478476783923" target="_blank">View on X</a>
+         | <a href="../../tweets/2006941478476783923.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="unitree humanoid robot daily training 🥳
+have you exercised today? how about training together with a robot?
+please use robots in a friendly and safe manner, and keep a safe distance. https://t.co/rcltimbkau">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1844926705389142016/nIEbH8rV_normal.jpg" alt="Unitree" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Unitree</div>
+            <div class="author-handle">
+                <a href="https://x.com/UnitreeRobotics" target="_blank">@UnitreeRobotics</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Unitree Humanoid Robot Daily Training 🥳
+Have you exercised today? How about training together with a robot?
+Please use robots in a friendly and safe manner, and keep a safe distance. https://t.co/RCltImbkAU</div>
+    <div class="tweet-media">
+<video src="https://via.placeholder.com/400x300?text=Media+Unavailable&2007746313220415717/0akUqKfy3XUpPUZ-.mp4" poster="https://via.placeholder.com/400x300?text=Media+Unavailable&2007746313220415717/thumb_0akUqKfy3XUpPUZ-.jpg" controls preload="none"></video>
+</div>
+    <div class="tweet-categories"><a href="../../categories/robotics-automation.html" class="category-tag">Robotics & Automation</a></div>
+    <div class="tweet-stats">
+        <span>6179 likes</span>
+        <span>1096 retweets</span>
+        <span>492 replies</span>
+        <span>Jan 04, 2026 at 09:29</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/UnitreeRobotics/status/2007746313220415717" target="_blank">View on X</a>
+         | <a href="../../tweets/2007746313220415717.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="chinese researchers have built a robotic skin that behaves less like a sensor sheet and more like a nervous system.
+
+instead of sending everything to a central cpu, this neuromorphic e-skin processes touch locally. normal contact is reported upstream, but extreme forces trigger a direct reflex signal to the motors, causing the robot to pull away immediately, no software loop, no delay.
+
+damage is detected the same way: if a section is cut, its signal stops, pinpointing the injury.
+
+the skin is m">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1945929091875565569/sYEMYrQo_normal.jpg" alt="Lukas Ziegler" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Lukas Ziegler</div>
+            <div class="author-handle">
+                <a href="https://x.com/lukas_m_ziegler" target="_blank">@lukas_m_ziegler</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Chinese researchers have built a robotic skin that behaves less like a sensor sheet and more like a nervous system.
+
+Instead of sending everything to a central CPU, this neuromorphic e-skin processes touch locally. Normal contact is reported upstream, but extreme forces trigger a direct reflex signal to the motors, causing the robot to pull away immediately, no software loop, no delay.
+
+Damage is detected the same way: if a section is cut, its signal stops, pinpointing the injury.
+
+The skin is modular and magnetic, so damaged patches can be swapped in seconds. The real shift here isn’t “robots feeling pain” in a human sense, but pushing perception and reaction out to the edge. 
+
+As humanoids move into human spaces, fast local reflexes may matter more than ever.
+
+Read more here: https://t.co/7svJ4JPBWb
+
+~~   
+
+♻️ Join the weekly robotics newsletter, and never miss any news → https://t.co/GoA3ZuwoPB</div>
+    <div class="tweet-media">
+<img src="https://via.placeholder.com/400x300?text=Media+Unavailable&2007445877397315667/G9vhIrVXgAA_pqL.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../../categories/robotics-automation.html" class="category-tag">Robotics & Automation</a> <a href="../../categories/ai-machine-learning.html" class="category-tag">AI & Machine Learning</a></div>
+    <div class="tweet-stats">
+        <span>240 likes</span>
+        <span>48 retweets</span>
+        <span>14 replies</span>
+        <span>Jan 03, 2026 at 13:36</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/lukas_m_ziegler/status/2007445877397315667" target="_blank">View on X</a>
+         | <a href="../../tweets/2007445877397315667.html">Details</a>
+    </div>
+</article>
+
+    </div>
+</div>
+<div class="bookmark-section collapsed" id="section-other">
+    <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-toggle">▶</span>
+        <span class="section-title">Other Bookmarks</span>
+        <span class="section-count">(5 bookmarks)</span>
+    </div>
+    <div class="section-content">
+
+<article class="tweet-card" data-text="wow. 👏
+
+claude ran a grow tent and kept a tomato plant, sol, alive.
+
+a small computer, the arduino, reads sensors for light, soil moisture, temp, and humidity, then follows claude’s written instructions to control lights, heater, fan, and pump.
+
+arduino flips the correct relay pins high or low, which closes the power circuit to that device. light turns on, mat heats, fans spin, pump pushes water through tubing to the pot. a drip ring or emitter spreads the water around the roots.
+
+feedback loop,">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1816185267037859840/Fd18CH0v_normal.jpg" alt="Rohan Paul" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Rohan Paul</div>
+            <div class="author-handle">
+                <a href="https://x.com/rohanpaul_ai" target="_blank">@rohanpaul_ai</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Wow. 👏
+
+Claude ran a grow tent and kept a tomato plant, Sol, alive.
+
+A small computer, the Arduino, reads sensors for light, soil moisture, temp, and humidity, then follows Claude’s written instructions to control lights, heater, fan, and pump.
+
+Arduino flips the correct relay pins high or low, which closes the power circuit to that device. Light turns on, mat heats, fans spin, pump pushes water through tubing to the pot. A drip ring or emitter spreads the water around the roots.
+
+Feedback loop, sensors update, Claude checks if targets are met, for example soil moisture above 35%, humidity near 55% to 65%, temp in range. If not, it tweaks runtimes or timing.
+
+Claude watches the live data and camera, reasons, and sends commands or code updates. When the Arduino crashed on day 34, Claude noticed bad readings, turned systems back on in the right order, watered 600ml, then kept tuning humidity and heat.
+
+Result, the tomato plant recovered and kept growing to 15-20 leaves by day 36.</div>
+    
+    <div class="tweet-categories"><a href="../../categories/ai-machine-learning.html" class="category-tag">AI & Machine Learning</a> <a href="../../categories/robotics-automation.html" class="category-tag">Robotics & Automation</a></div>
+    <div class="tweet-stats">
+        <span>409 likes</span>
+        <span>58 retweets</span>
+        <span>20 replies</span>
+        <span>Jan 04, 2026 at 17:17</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/rohanpaul_ai/status/2007863848322191647" target="_blank">View on X</a>
+         | <a href="../../tweets/2007863848322191647.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="i built an ai factory that uses claude code agents to build apps while i sleep.
+
+this is an automated &quot;assembly line&quot; pipeline, all run by claude opus 4.5. projects move through a kanban-like system from idea to research, architecture, coding and testing.
+
+factory workers start with market research, searching the web and social media. then they validate everything, checking app stores for competition and securing a domain name. (all automated by apis and mcps)
+
+they automatically creat">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/2006784699251748864/fZ1xQPWe_normal.jpg" alt="Benjamin De Kraker" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Benjamin De Kraker</div>
+            <div class="author-handle">
+                <a href="https://x.com/BenjaminDEKR" target="_blank">@BenjaminDEKR</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">I built an AI Factory that uses Claude Code agents to build apps while I sleep.
+
+This is an automated "assembly line" pipeline, all run by Claude Opus 4.5. Projects move through a Kanban-like system from Idea to Research, Architecture, Coding and Testing.
+
+Factory workers start with market research, searching the web and social media. Then they validate everything, checking app stores for competition and securing a domain name. (All automated by APIs and MCPs)
+
+They automatically create several rounds of app UI revisions. When I wake up, there are projects waiting for me to review: approve this design, give feedback, send that one back for improvement.
+
+Projects are actively coded and tested by the agents, while the entire process is tracked and logged (with "worker documents" that travel each step of the way, like a real factory.)</div>
+    <div class="tweet-media">
+<video src="https://via.placeholder.com/400x300?text=Media+Unavailable&2007842172666560983/WVIklwmUiD8R2XVt.mp4" poster="https://via.placeholder.com/400x300?text=Media+Unavailable&2007842172666560983/thumb_WVIklwmUiD8R2XVt.jpg" controls preload="none"></video>
+</div>
+    <div class="tweet-categories"><a href="../../categories/ai-machine-learning.html" class="category-tag">AI & Machine Learning</a> <a href="../../categories/robotics-automation.html" class="category-tag">Robotics & Automation</a> <a href="../../categories/productivity-tools.html" class="category-tag">Productivity Tools</a></div>
+    <div class="tweet-stats">
+        <span>3748 likes</span>
+        <span>255 retweets</span>
+        <span>335 replies</span>
+        <span>Jan 04, 2026 at 15:50</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/BenjaminDEKR/status/2007842172666560983" target="_blank">View on X</a>
+         | <a href="../../tweets/2007842172666560983.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="robots are increasingly developing new capabilities. in this case, &quot;robodogs&quot; have now learned to swim.
+
+frankly, i wouldn't be surprised if they could fly in the future and then be used on water, in the air, and on land. https://t.co/crwnk2zvuu">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1728327996375719936/RW7VBJfD_normal.jpg" alt="Chubby♨️" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Chubby♨️</div>
+            <div class="author-handle">
+                <a href="https://x.com/kimmonismus" target="_blank">@kimmonismus</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Robots are increasingly developing new capabilities. In this case, "Robodogs" have now learned to swim.
+
+Frankly, I wouldn't be surprised if they could fly in the future and then be used on water, in the air, and on land. https://t.co/cRWNk2zvuU</div>
+    <div class="tweet-media">
+<video src="https://via.placeholder.com/400x300?text=Media+Unavailable&2007769048483090678/57Rmcjj2frLBMmJr.mp4" poster="https://via.placeholder.com/400x300?text=Media+Unavailable&2007769048483090678/thumb_57Rmcjj2frLBMmJr.jpg" controls preload="none"></video>
+</div>
+    <div class="tweet-categories"><a href="../../categories/robotics-automation.html" class="category-tag">Robotics & Automation</a></div>
+    <div class="tweet-stats">
+        <span>889 likes</span>
+        <span>152 retweets</span>
+        <span>46 replies</span>
+        <span>Jan 04, 2026 at 11:00</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/kimmonismus/status/2007769048483090678" target="_blank">View on X</a>
+         | <a href="../../tweets/2007769048483090678.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="the first amphibious all-terrain robot dog is here! 🤖🌊
+
+genisomai has officially launched the &quot;tongchui m1,&quot; a heavy-duty quadruped designed for extreme environments. it’s hitting the market with a massive 1:1 payload-to-weight ratio, carrying 35kg (approx. 77 lbs) on a 35kg frame.
+
+this bot is built to last with an ip67 rating and a wide operating temperature range (-20°c to 55°c). it even features a dual-battery hot-swap system and supports switching between wheels and feet for maxim">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1933947994971500544/E5k65Qu__normal.jpg" alt="RoboHub🤖" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">RoboHub🤖</div>
+            <div class="author-handle">
+                <a href="https://x.com/XRoboHub" target="_blank">@XRoboHub</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">The First Amphibious All-Terrain Robot Dog is Here! 🤖🌊
+
+Genisomai has officially launched the "Tongchui M1," a heavy-duty quadruped designed for extreme environments. It’s hitting the market with a massive 1:1 payload-to-weight ratio, carrying 35kg (approx. 77 lbs) on a 35kg frame.
+
+This bot is built to last with an IP67 rating and a wide operating temperature range (-20°C to 55°C). It even features a dual-battery hot-swap system and supports switching between wheels and feet for maximum agility.
+
+With its 360° sensing and 80cm obstacle clearance, the M1 is positioning itself as a powerhouse for industrial-grade tasks.
+
+Source: Genisomai</div>
+    <div class="tweet-media">
+<video src="https://via.placeholder.com/400x300?text=Media+Unavailable&2007492669220769926/jx12Uq6qnvJ4aLA0.mp4" poster="https://via.placeholder.com/400x300?text=Media+Unavailable&2007492669220769926/thumb_jx12Uq6qnvJ4aLA0.jpg" controls preload="none"></video>
+</div>
+    <div class="tweet-categories"><a href="../../categories/robotics-automation.html" class="category-tag">Robotics & Automation</a></div>
+    <div class="tweet-stats">
+        <span>237 likes</span>
+        <span>57 retweets</span>
+        <span>4 replies</span>
+        <span>Jan 03, 2026 at 16:42</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/XRoboHub/status/2007492669220769926" target="_blank">View on X</a>
+         | <a href="../../tweets/2007492669220769926.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="🇨🇳 ai-driven swarm coordination, with no collisions or visible lag. in liuyang, china’s “fireworks capital&quot;
+15,947 drones flew in sync, a new guinness world record with zero human pilots.
+
+ai coordination soon should move from drone shows to city systems.
+https://t.co/hzuc2cjbkt">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1816185267037859840/Fd18CH0v_normal.jpg" alt="Rohan Paul" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Rohan Paul</div>
+            <div class="author-handle">
+                <a href="https://x.com/rohanpaul_ai" target="_blank">@rohanpaul_ai</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">🇨🇳 AI-driven swarm coordination, with no collisions or visible lag. In Liuyang, China’s “Fireworks Capital"
+15,947 drones flew in sync, a new Guinness World Record with zero human pilots.
+
+AI coordination soon should move from drone shows to city systems.
+https://t.co/HzUC2cjbKT</div>
+    <div class="tweet-media">
+<video src="https://via.placeholder.com/400x300?text=Media+Unavailable&2007074990236295510/gvxaXmQGTRH0ZiP5.mp4" poster="https://via.placeholder.com/400x300?text=Media+Unavailable&2007074990236295510/thumb_gvxaXmQGTRH0ZiP5.jpg" controls preload="none"></video>
+</div>
+    <div class="tweet-categories"><a href="../../categories/robotics-automation.html" class="category-tag">Robotics & Automation</a> <a href="../../categories/ai-machine-learning.html" class="category-tag">AI & Machine Learning</a></div>
+    <div class="tweet-stats">
+        <span>1021 likes</span>
+        <span>137 retweets</span>
+        <span>40 replies</span>
+        <span>Jan 02, 2026 at 13:02</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/rohanpaul_ai/status/2007074990236295510" target="_blank">View on X</a>
+         | <a href="../../tweets/2007074990236295510.html">Details</a>
+    </div>
+</article>
+
+    </div>
+</div>
+
+
+<script>
+const SYNONYMS = {"ai": ["artificial intelligence", "machine learning", "ml", "neural", "gpt", "llm", "chatgpt", "claude"], "robot": ["robotics", "humanoid", "bot", "automation", "robo", "robotic"], "ukraine": ["ukrainian", "kyiv", "kiev", "zelensky", "zelenskyy"], "russia": ["russian", "putin", "moscow", "kremlin"], "tech": ["technology", "software", "hardware", "digital", "computing"], "code": ["coding", "programming", "developer", "software", "github"], "data": ["database", "analytics", "dataset", "datasets"], "model": ["models", "modeling", "llm", "neural network"], "agent": ["agents", "agentic", "autonomous"], "video": ["videos", "clip", "footage"], "image": ["images", "photo", "picture", "visual"], "war": ["warfare", "military", "conflict", "battle"], "science": ["scientific", "research", "study", "scientist"], "company": ["companies", "startup", "startups", "corporation", "firm"], "product": ["products", "launch", "release", "shipped"]};
+
+const SearchModule = {
+    fuzzyEnabled: false,
+    synonyms: SYNONYMS,
+
+    stem(word) {
+        word = word.toLowerCase();
+        if (word.length < 4) return word;
+        const suffixes = ['tion', 'ment', 'ness', 'ing', 'ed', 'ly', 'es', 's'];
+        for (const suffix of suffixes) {
+            if (word.endsWith(suffix) && word.length > suffix.length + 2) {
+                return word.slice(0, -suffix.length);
+            }
+        }
+        return word;
+    },
+
+    levenshtein(a, b) {
+        const matrix = Array(b.length + 1).fill(null).map(() => Array(a.length + 1).fill(null));
+        for (let i = 0; i <= a.length; i++) matrix[0][i] = i;
+        for (let j = 0; j <= b.length; j++) matrix[j][0] = j;
+        for (let j = 1; j <= b.length; j++) {
+            for (let i = 1; i <= a.length; i++) {
+                const cost = a[i-1] === b[j-1] ? 0 : 1;
+                matrix[j][i] = Math.min(matrix[j][i-1] + 1, matrix[j-1][i] + 1, matrix[j-1][i-1] + cost);
+            }
+        }
+        return matrix[b.length][a.length];
+    },
+
+    similarity(a, b) {
+        const maxLen = Math.max(a.length, b.length);
+        if (maxLen === 0) return 1;
+        return 1 - this.levenshtein(a, b) / maxLen;
+    },
+
+    wordMatches(query, target, fuzzyThreshold = 0.75) {
+        query = query.toLowerCase();
+        target = target.toLowerCase();
+        if (target === query) return true;
+        if (target.startsWith(query) || query.startsWith(target)) return true;
+        if (this.stem(target) === this.stem(query)) return true;
+        if (this.fuzzyEnabled && query.length >= 3) {
+            return this.similarity(query, target) >= fuzzyThreshold;
+        }
+        return false;
+    },
+
+    expandQuery(query) {
+        const words = query.toLowerCase().split(/\s+/).filter(w => w.length > 0);
+        const expanded = new Set(words);
+        for (const word of words) {
+            for (const [key, syns] of Object.entries(this.synonyms)) {
+                if (word === key || syns.includes(word)) {
+                    expanded.add(key);
+                    syns.forEach(s => expanded.add(s));
+                }
+            }
+        }
+        return Array.from(expanded);
+    },
+
+    matches(text, query) {
+        if (!query || !text) return !query;
+        text = text.toLowerCase();
+        const queryTerms = this.expandQuery(query);
+        const textWords = text.split(/\s+/);
+        return queryTerms.some(term => {
+            if (text.includes(term)) return true;
+            if (this.fuzzyEnabled) {
+                return textWords.some(word => this.wordMatches(term, word));
+            }
+            return false;
+        });
+    }
+};
+
+
+// Setup fuzzy toggle
+document.getElementById('fuzzy-toggle').addEventListener('change', function() {
+    SearchModule.fuzzyEnabled = this.checked;
+    applyFilters();
+});
+
+// Setup search input
+const searchInput = document.getElementById('search-input');
+let searchTimeout = null;
+searchInput.addEventListener('input', function() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => applyFilters(), 200);
+});
+
+function applyFilters() {
+    const query = searchInput.value.trim();
+    const resultsDiv = document.getElementById('search-results');
+    let matchCount = 0;
+
+    // Search timeline events
+    document.querySelectorAll('.timeline-event').forEach(event => {
+        const title = event.querySelector('.event-title')?.textContent || '';
+        const summary = event.querySelector('.event-summary')?.textContent || '';
+        const searchableText = `${title} ${summary}`;
+        const matches = !query || SearchModule.matches(searchableText, query);
+        event.style.display = matches ? 'block' : 'none';
+        if (matches) matchCount++;
+    });
+
+    // Search bookmark sections
+    document.querySelectorAll('.bookmark-section').forEach(section => {
+        const title = section.querySelector('.section-title')?.textContent || '';
+        const sectionTweets = section.querySelectorAll('.tweet-card');
+        let sectionMatches = false;
+        let visibleInSection = 0;
+
+        sectionTweets.forEach(card => {
+            const tweetText = card.querySelector('.tweet-text')?.textContent || '';
+            const authorName = card.querySelector('.author-name')?.textContent || '';
+            const searchableText = `${tweetText} ${authorName}`;
+            const matches = !query || SearchModule.matches(searchableText, query);
+            card.classList.toggle('hidden', !matches);
+            if (matches) {
+                sectionMatches = true;
+                visibleInSection++;
+            }
+        });
+
+        // Show section if any tweets match or title matches
+        const titleMatches = !query || SearchModule.matches(title, query);
+        section.style.display = (sectionMatches || titleMatches) ? 'block' : 'none';
+
+        // Auto-expand sections with matches
+        if (query && sectionMatches) {
+            section.classList.remove('collapsed');
+        }
+    });
+
+    if (query) {
+        resultsDiv.textContent = `Found matches in events and bookmarks`;
+        resultsDiv.classList.remove('hidden');
+    } else {
+        resultsDiv.classList.add('hidden');
+        // Re-collapse all sections when search is cleared
+        document.querySelectorAll('.bookmark-section').forEach(section => {
+            section.classList.add('collapsed');
+        });
+    }
+}
+</script>
+
+    <script>
+    // Toggle collapsible bookmark sections
+    function toggleSection(header) {
+        const section = header.closest('.bookmark-section');
+        section.classList.toggle('collapsed');
+    }
+
+    // Open a specific section and scroll to it
+    function openSection(eventId) {
+        const section = document.getElementById('section-' + eventId);
+        if (section) {
+            section.classList.remove('collapsed');
+            setTimeout(() => section.scrollIntoView({behavior: 'smooth', block: 'start'}), 100);
+        }
+    }
+
+    // Handle hash navigation on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.location.hash && window.location.hash.startsWith('#section-')) {
+            const sectionId = window.location.hash.substring(1);
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.remove('collapsed');
+                setTimeout(() => section.scrollIntoView({behavior: 'smooth', block: 'start'}), 100);
+            }
+        }
+    });
+    </script>
+</body>
+</html>

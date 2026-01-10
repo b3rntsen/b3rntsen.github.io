@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Industry Analysis - 2023</title>
+    <style>
+        :root {
+            --bg: #fff;
+            --text: #1a1a1a;
+            --secondary: #666;
+            --border: #e1e1e1;
+            --link: #1d9bf0;
+            --card-bg: #f7f7f7;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #15202b;
+                --text: #e7e9ea;
+                --secondary: #8b98a5;
+                --border: #38444d;
+                --link: #1d9bf0;
+                --card-bg: #1e2732;
+            }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        a { color: var(--link); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        nav {
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            z-index: 100;
+            margin-bottom: 20px;
+            padding: 15px 0 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        nav a { margin-right: 15px; }
+        h1 { margin-bottom: 10px; }
+        h2 { margin: 20px 0 10px; font-size: 1.3em; }
+        .meta { color: var(--secondary); font-size: 0.9em; margin-bottom: 20px; }
+        .tweet-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .tweet-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .author-info { flex: 1; }
+        .author-name { font-weight: bold; }
+        .author-handle { color: var(--secondary); }
+        .tweet-text {
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .tweet-media {
+            margin-bottom: 15px;
+        }
+        .tweet-media img {
+            max-width: 100%;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        .tweet-media video {
+            max-width: 100%;
+            min-height: 200px;
+            border-radius: 12px;
+            background: #1a1a2e;
+        }
+        .video-thumbnail {
+            display: inline-block;
+            text-decoration: none;
+        }
+        .video-placeholder {
+            width: 280px;
+            height: 160px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .video-placeholder:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(29, 155, 240, 0.3);
+        }
+        .play-icon {
+            font-size: 2.5em;
+            color: #1d9bf0;
+        }
+        .video-label {
+            color: #8899a6;
+            font-size: 0.9em;
+        }
+        .video-thumbnail-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            max-width: 100%;
+        }
+        .video-thumbnail-wrapper .video-thumb {
+            max-width: 100%;
+            border-radius: 12px;
+            display: block;
+        }
+        .video-play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .video-thumbnail-wrapper:hover .video-play-overlay {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: rgba(29, 155, 240, 0.9);
+        }
+        .tweet-stats {
+            color: var(--secondary);
+            font-size: 0.85em;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .tweet-links {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+        .category-tag {
+            display: inline-block;
+            background: var(--link);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .summary {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: 1em;
+        }
+        .search-container {
+            position: relative;
+        }
+        .search-options {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        .search-options label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            color: var(--secondary);
+        }
+        .search-options input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+        .search-results {
+            color: var(--secondary);
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        .loading-indicator {
+            text-align: center;
+            padding: 20px;
+            color: var(--secondary);
+        }
+        .loading-indicator.done {
+            color: var(--secondary);
+            font-size: 0.9em;
+        }
+        #scroll-sentinel {
+            height: 1px;
+        }
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 0 0 8px 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 50;
+        }
+        .search-suggestions div {
+            padding: 8px 10px;
+            cursor: pointer;
+        }
+        .search-suggestions div:hover,
+        .search-suggestions div.selected {
+            background: var(--link);
+            color: white;
+        }
+        .search-suggestions .match-count {
+            color: var(--secondary);
+            font-size: 0.8em;
+            float: right;
+        }
+        .timeline-nav {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+        .year-row, .month-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .year-link, .month-link {
+            cursor: pointer;
+            color: var(--link);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+        .year-link:hover, .month-link:hover {
+            background: var(--link);
+            color: white;
+        }
+        .year-link.active {
+            background: var(--link);
+            color: white;
+        }
+        .month-row {
+            margin-top: 8px;
+            padding: 8px;
+            background: var(--bg);
+            border-radius: 4px;
+        }
+        .filter-bar, .month-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .filter-btn {
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--card-bg);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 0.85em;
+        }
+        .filter-btn:hover {
+            border-color: var(--link);
+        }
+        .filter-btn.active {
+            background: var(--link);
+            color: white;
+            border-color: var(--link);
+        }
+        /* Story styles */
+        .summary-narrative {
+            font-size: 1.05em;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+        }
+        .story-timeline {
+            position: relative;
+            padding: 20px 0;
+            margin: 30px 0;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+        .timeline-event {
+            position: relative;
+            margin-left: 50px;
+            margin-bottom: 20px;
+        }
+        .event-dot {
+            position: absolute;
+            left: -38px;
+            top: 15px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--link);
+            border: 3px solid var(--bg);
+        }
+        .event-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .event-header {
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 10px;
+        }
+        .event-header:hover {
+            background: rgba(29, 155, 240, 0.1);
+        }
+        .event-date {
+            color: var(--secondary);
+            font-size: 0.85em;
+            min-width: 120px;
+        }
+        .event-title {
+            flex: 1;
+            margin: 0;
+            font-size: 1.1em;
+        }
+        .event-count {
+            color: var(--secondary);
+            font-size: 0.85em;
+        }
+        .event-content {
+            display: none;
+            padding: 0 15px 15px;
+            border-top: 1px solid var(--border);
+        }
+        .event-card.expanded .event-content {
+            display: block;
+        }
+        .event-summary {
+            margin-bottom: 15px;
+        }
+        .event-media {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+        .event-media img, .event-media video {
+            height: 100px;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        .event-tweets-link {
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .stories-toc {
+            display: grid;
+            gap: 20px;
+        }
+        .category-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px 20px;
+        }
+        .category-section h3 {
+            margin: 0 0 10px;
+        }
+        .year-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .year-links a {
+            padding: 5px 12px;
+            background: var(--bg);
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        /* Collapsible bookmark sections */
+        .bookmark-section {
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .section-header {
+            position: sticky;
+            top: 0;
+            background: var(--card-bg);
+            padding: 12px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 10;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-header:hover {
+            background: rgba(29, 155, 240, 0.1);
+        }
+        .section-toggle {
+            transition: transform 0.2s;
+            font-size: 0.8em;
+        }
+        .bookmark-section:not(.collapsed) .section-toggle {
+            transform: rotate(90deg);
+        }
+        .section-title {
+            font-weight: 600;
+            flex: 1;
+        }
+        .section-count {
+            color: var(--secondary);
+            font-size: 0.9em;
+        }
+        .section-content {
+            display: none;
+        }
+        .bookmark-section:not(.collapsed) .section-content {
+            display: block;
+        }
+        .bookmark-section:not(.collapsed) .section-header {
+            border-bottom: 1px solid var(--border);
+        }
+        .bookmark-section.collapsed .section-header {
+            border-bottom: none;
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="../../index.html">Chronological</a>
+        <a href="../../categories/index.html">Categories</a>
+        <a href="../../timeline/index.html">Timeline</a>
+        <a href="../../stories/index.html">Stories</a>
+        <a href="../authors/index.html">Authors</a>
+    </nav>
+    
+<h1>Tech Industry Analysis - 2023</h1>
+<p class="meta">22 bookmarks | Generated 2026-01-08</p>
+
+<div class="search-container">
+    <input type="text" id="search-input" class="search-box" placeholder="Search this story..." autocomplete="off">
+    <div class="search-options">
+        <label><input type="checkbox" id="fuzzy-toggle"> Fuzzy matching</label>
+    </div>
+</div>
+<div id="search-results" class="search-results hidden"></div>
+
+<div class="summary-narrative">
+<p><strong>The Year Silicon Valley's Soul Went to Market</strong></p>
+<p>2023 was the year the tech industry stared into its own reflection and couldn't decide if it liked what it saw. Twenty-two carefully curated bookmarks tell the story of an ecosystem wrestling with its identity—caught between utopian dreams and existential reckonings, between revolutionary breakthroughs and corporate power plays that would reshape the future of human intelligence itself.</p>
+<p>The narrative begins in October's crisp digital air, when Marc Andreessen's "Techno-Optimist Manifesto" detonated across Twitter feeds like a philosophical bomb. These bookmarked threads capture a movement crystallizing—tech leaders no longer content to build in quiet corners, instead boldly declaring their vision for humanity's technological destiny. The manifesto wasn't just a document; it was a battle cry for an industry tired of apologizing for its ambitions.</p>
+<p>But utopian visions have a way of colliding with messy reality. By November, the bookmarks pivot dramatically as OpenAI—the crown jewel of artificial intelligence—imploded in spectacular fashion. Sam Altman's firing and rehiring within days exposed the fault lines running through the AI revolution: Who controls the path to artificial general intelligence? Corporate boards or visionary founders? These saved tweets chronicle not just a leadership crisis, but a referendum on whether world-changing technology should be democratized or gatekept.</p>
+<p>As winter arrived, the focus shifted from software dreams to steel reality. Tesla's Cybertruck launch bookmarks reveal a different kind of tech narrative—one where bits meet atoms, where energy infrastructure becomes the new platform play. These weren't just automotive industry updates; they were breadcrumbs marking Tesla's evolution from car company to civilization-scale energy orchestrator.</p>
+<p>Across these 22 bookmarks, a pattern emerges: 2023 wasn't just another year of incremental innovation. It was when Big Tech stopped pretending to be humble. Whether through philosophical manifestos, AI governance battles, or trillion-dollar infrastructure plays, the industry's biggest players were making explicit what had long been implicit—they weren't just building products anymore, they were architecting the future itself.</p>
+<p>The bookmarks end with December's quiet intensity, leaving us to wonder: In saving these particular moments, were we documenting Silicon Valley's greatest year, or its most dangerous?</p>
+</div>
+
+<h2>Timeline of Events</h2>
+<div class="story-timeline">
+<div class="timeline-line"></div>
+
+<div class="timeline-event" data-event-id="evt-001">
+    <div class="event-dot"></div>
+    <div class="event-card">
+        <div class="event-header" onclick="this.parentElement.classList.toggle('expanded')">
+            <span class="event-date">October 16 → November 25</span>
+            <h3 class="event-title">Techno-Optimism Movement and Future Vision</h3>
+            <span class="event-count">3 bookmarks</span>
+        </div>
+        <div class="event-content">
+            <p class="event-summary">These bookmarks capture a pivotal moment in tech discourse when Marc Andreessen's "Techno-Optimist Manifesto" sparked intense debate about humanity's technological future. The collection reveals a fascinating tension between grand visions of human expansion to the stars and practical concerns about AI control and open platforms. Together, these tweets represent a snapshot of Silicon Valley grappling with its own contradictions—balancing utopian dreams of technological progress with the sobering realities of building systems that won't destroy us in the process.</p>
+            
+            <a href="#section-evt-001" class="event-tweets-link" onclick="openSection('evt-001')">View tweets below</a>
+        </div>
+    </div>
+</div>
+
+<div class="timeline-event" data-event-id="evt-002">
+    <div class="event-dot"></div>
+    <div class="event-card">
+        <div class="event-header" onclick="this.parentElement.classList.toggle('expanded')">
+            <span class="event-date">November 22 → December 10</span>
+            <h3 class="event-title">OpenAI Leadership Crisis and AGI Democratization</h3>
+            <span class="event-count">3 bookmarks</span>
+        </div>
+        <div class="event-content">
+            <p class="event-summary">These bookmarks capture a pivotal moment in AI history when OpenAI's leadership crisis exposed the philosophical battle between safety-focused effective altruists and rapid commercialization advocates. The collection suggests December 8th, 2023 marked a turning point toward AI democratization, as open-source models began seriously challenging the dominance of GPU-wealthy giants like OpenAI and Anthropic. The tweets reveal growing evidence that smaller, more accessible AI models were starting to match or exceed GPT-4's performance, signaling a potential shift from centralized AI power to a more distributed landscape.</p>
+            <div class="event-media"><img src="https://via.placeholder.com/400x300?text=Media+Unavailable&1733459697494036493/GA58XmwXAAAvb2d.jpg" loading="lazy"></div>
+            <a href="#section-evt-002" class="event-tweets-link" onclick="openSection('evt-002')">View tweets below</a>
+        </div>
+    </div>
+</div>
+
+<div class="timeline-event" data-event-id="evt-003">
+    <div class="event-dot"></div>
+    <div class="event-card">
+        <div class="event-header" onclick="this.parentElement.classList.toggle('expanded')">
+            <span class="event-date">December 1 → December 16</span>
+            <h3 class="event-title">Tesla Cybertruck Launch and Energy Features</h3>
+            <span class="event-count">3 bookmarks</span>
+        </div>
+        <div class="event-content">
+            <p class="event-summary">These bookmarks capture the strategic significance behind Tesla's Cybertruck launch, revealing how the vehicle represents more than just another electric truck—it's a gateway to Tesla's high-margin ecosystem of energy solutions and software services. The tweets highlight Tesla's evolution from a car company to an energy platform, with features like Powershare technology turning vehicles into mobile power stations, while services like Autopilot deliver near-pure profit margins. Together, they paint a picture of Tesla positioning itself at the center of a historic energy transition that could eliminate half of global fossil fuel demand by 2040, transforming both transportation and energy infrastructure simultaneously.</p>
+            <div class="event-media"><video src="https://via.placeholder.com/400x300?text=Media+Unavailable&1730455114253521402/42H9CG1xFs2R2XUf.mp4" preload="metadata"></video>
+<img src="https://via.placeholder.com/400x300?text=Media+Unavailable&1730455114253521402/thumb_42H9CG1xFs2R2XUf.jpg" loading="lazy">
+<img src="https://via.placeholder.com/400x300?text=Media+Unavailable&1730465245574086749/thumb_ZHKOq_qkQQ3BCEYq.jpg" loading="lazy">
+<video src="https://via.placeholder.com/400x300?text=Media+Unavailable&1730465245574086749/ZHKOq_qkQQ3BCEYq.mp4" preload="metadata"></video></div>
+            <a href="#section-evt-003" class="event-tweets-link" onclick="openSection('evt-003')">View tweets below</a>
+        </div>
+    </div>
+</div>
+</div>
+
+<h2>All Bookmarks</h2>
+<div class="bookmark-section collapsed" id="section-evt-001">
+    <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-toggle">▶</span>
+        <span class="section-title">Techno-Optimism Movement and Future Vision</span>
+        <span class="section-count">(3 bookmarks)</span>
+    </div>
+    <div class="section-content">
+
+<article class="tweet-card" data-text="the techno-optimist manifesto part 1
+
+“you live in a deranged age — more deranged than usual, because despite great scientific and technological advances, man has not the faintest idea of who he is or what he is doing.”
+— walker percy
+
+“our species is 300,000 years old. for the first 290,000 years, we were foragers, subsisting in a way that’s still observable among the bushmen of the kalahari and the sentinelese of the andaman islands. even after homo sapiens embraced agriculture, progress was p">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1820716712234303489/9GpKDZjq_normal.jpg" alt="Marc Andreessen 🇺🇸" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Marc Andreessen 🇺🇸</div>
+            <div class="author-handle">
+                <a href="https://x.com/pmarca" target="_blank">@pmarca</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">THE TECHNO-OPTIMIST MANIFESTO part 1
+
+“You live in a deranged age — more deranged than usual, because despite great scientific and technological advances, man has not the faintest idea of who he is or what he is doing.”
+— Walker Percy
+
+“Our species is 300,000 years old. For the first 290,000 years, we were foragers, subsisting in a way that’s still observable among the Bushmen of the Kalahari and the Sentinelese of the Andaman Islands. Even after Homo Sapiens embraced agriculture, progress was painfully slow. A person born in Sumer in 4,000BC would find the resources, work, and technology available in England at the time of the Norman Conquest or in the Aztec Empire at the time of Columbus quite familiar. Then, beginning in the 18th Century, many people’s standard of living skyrocketed. What brought about this dramatic improvement, and why?”
+— Marian Tupy
+
+“There’s a way to do it better. Find it.”
+— Thomas Edison
+
+Lies
+
+We are being lied to.
+
+We are told that technology takes our jobs, reduces our wages, increases inequality, threatens our health, ruins the environment, degrades our society, corrupts our children, impairs our humanity, threatens our future, and is ever on the verge of ruining everything.
+
+We are told to be angry, bitter, and resentful about technology.
+
+We are told to be pessimistic.
+
+The myth of Prometheus – in various updated forms like Frankenstein, Oppenheimer, and Terminator – haunts our nightmares.
+
+We are told to denounce our birthright – our intelligence, our control over nature, our ability to build a better world.
+
+We are told to be miserable about the future.</div>
+    
+    <div class="tweet-categories"><a href="../../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a> <a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a></div>
+    <div class="tweet-stats">
+        <span>12267 likes</span>
+        <span>3113 retweets</span>
+        <span>851 replies</span>
+        <span>Oct 16, 2023 at 14:50</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/pmarca/status/1713930459779129358" target="_blank">View on X</a>
+         | <a href="../../tweets/1713930459779129358.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="the enemy of techno-optimism isn’t sustainability; it’s short-termism. 
+
+humanity should not build new things to pump up quarterly earnings; we should build them so that our descendants, in whatever form they come, will own the worlds and the stars. 
+
+https://t.co/08plizj093">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1900075477999763456/8nSaoQcX_normal.jpg" alt="Noah Smith 🐇🇺🇸🇺🇦🇹🇼" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Noah Smith 🐇🇺🇸🇺🇦🇹🇼</div>
+            <div class="author-handle">
+                <a href="https://x.com/Noahpinion" target="_blank">@Noahpinion</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">The enemy of techno-optimism isn’t sustainability; it’s short-termism. 
+
+Humanity should not build new things to pump up quarterly earnings; we should build them so that our descendants, in whatever form they come, will own the worlds and the stars. 
+
+https://t.co/08PLizJ093</div>
+    
+    <div class="tweet-categories"><a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a> <a href="../../categories/economic-philosophy.html" class="category-tag">Economic Philosophy</a></div>
+    <div class="tweet-stats">
+        <span>1316 likes</span>
+        <span>185 retweets</span>
+        <span>42 replies</span>
+        <span>Oct 21, 2023 at 22:52</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/Noahpinion/status/1715863533643255835" target="_blank">View on X</a>
+         | <a href="../../tweets/1715863533643255835.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="but seriously folks, this a short and juicy tirade in which i say:
+(0) there will be superhuman ai in the future
+(1) they will be under our control
+(2) they will not dominate us nor kill us
+(3)  they will mediate all of our interactions with the digital world
+(4) hence, they will need to be open platforms so that everyone can contribute to training and tuning them.">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1483577865056702469/rWA-3_T7_normal.jpg" alt="Yann LeCun" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Yann LeCun</div>
+            <div class="author-handle">
+                <a href="https://x.com/ylecun" target="_blank">@ylecun</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">But seriously folks, this a short and juicy tirade in which I say:
+(0) there will be superhuman AI in the future
+(1) they will be under our control
+(2) they will not dominate us nor kill us
+(3)  they will mediate all of our interactions with the digital world
+(4) hence, they will need to be open platforms so that everyone can contribute to training and tuning them.</div>
+    
+    <div class="tweet-categories"><a href="../../categories/ai-machine-learning.html" class="category-tag">AI & Machine Learning</a> <a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a></div>
+    <div class="tweet-stats">
+        <span>5855 likes</span>
+        <span>834 retweets</span>
+        <span>489 replies</span>
+        <span>Nov 25, 2023 at 20:47</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/ylecun/status/1728515719535489484" target="_blank">View on X</a>
+         | <a href="../../tweets/1728515719535489484.html">Details</a>
+    </div>
+</article>
+
+    </div>
+</div>
+<div class="bookmark-section collapsed" id="section-evt-002">
+    <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-toggle">▶</span>
+        <span class="section-title">OpenAI Leadership Crisis and AGI Democratization</span>
+        <span class="section-count">(3 bookmarks)</span>
+    </div>
+    <div class="section-content">
+
+<article class="tweet-card" data-text="good morning from san francisco. 
+
+now that the dust has settled on the first round of the openai debacle, it’s time to start asking some questions 
+
+two of the board members who voted altman out, helen toner and tasha mccauley are deeply enmeshed in ‘effective altruism’">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1710905180139753472/g9QhqYs7_normal.jpg" alt="anton 🇺🇸" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">anton 🇺🇸</div>
+            <div class="author-handle">
+                <a href="https://x.com/atroyn" target="_blank">@atroyn</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">good morning from san francisco. 
+
+now that the dust has settled on the first round of the openai debacle, it’s time to start asking some questions 
+
+two of the board members who voted altman out, helen toner and tasha mccauley are deeply enmeshed in ‘effective altruism’</div>
+    
+    <div class="tweet-categories"><a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a> <a href="../../categories/corporate-accountability.html" class="category-tag">Corporate Accountability</a></div>
+    <div class="tweet-stats">
+        <span>865 likes</span>
+        <span>70 retweets</span>
+        <span>36 replies</span>
+        <span>Nov 22, 2023 at 16:38</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/atroyn/status/1727365829392785524" target="_blank">View on X</a>
+         | <a href="../../tweets/1727365829392785524.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="1/n was december 8th, 2023, the day when we've come to realize that agi technology has been democratized?  that it cannot be confined to the few and the gpu-rich?  let me explain to you what happened yesterday. https://t.co/sylbucvqg6">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1998536249003380736/ew_SXOsl_normal.png" alt="Carlos E. Perez" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Carlos E. Perez</div>
+            <div class="author-handle">
+                <a href="https://x.com/IntuitMachine" target="_blank">@IntuitMachine</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">1/n Was December 8th, 2023, the day when we've come to realize that AGI technology has been democratized?  That it cannot be confined to the few and the GPU-rich?  Let me explain to you what happened yesterday. https://t.co/syLBuCVqG6</div>
+    <div class="tweet-media">
+<img src="https://via.placeholder.com/400x300?text=Media+Unavailable&1733459697494036493/GA58XmwXAAAvb2d.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../../categories/ai-machine-learning.html" class="category-tag">AI & Machine Learning</a> <a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a></div>
+    <div class="tweet-stats">
+        <span>820 likes</span>
+        <span>147 retweets</span>
+        <span>23 replies</span>
+        <span>Dec 09, 2023 at 12:12</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/IntuitMachine/status/1733459697494036493" target="_blank">View on X</a>
+         | <a href="../../tweets/1733459697494036493.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="how many years until open source models take over? is it never?
+
+i've been manually testing 20-30 different models all claiming impressive scores on benchmarks against openai and anthropic. what i've found:
+
+* super tiny models are becoming insanely good
+
+* medium models are starting to beat gpt-4 with prompt tuning and on specific tasks
+
+* gpt-4 still has a huge lead if you only want to use one model
+
+* claude-instant is being slept on
+
+* oss models have a pretty big deployment problem
+
+1. tiny">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1995170376175976448/vK7vtqQn_normal.jpg" alt="Hrishi" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Hrishi</div>
+            <div class="author-handle">
+                <a href="https://x.com/hrishioa" target="_blank">@hrishioa</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">How many years until open source models take over? Is it never?
+
+I've been manually testing 20-30 different models all claiming impressive scores on benchmarks against OpenAI and Anthropic. What I've found:
+
+* Super tiny models are becoming insanely good
+
+* Medium models are starting to beat GPT-4 with prompt tuning and on specific tasks
+
+* GPT-4 still has a huge lead if you only want to use one model
+
+* Claude-instant is being slept on
+
+* OSS models have a pretty big deployment problem
+
+1. Tiny models will definitely win: StableLM-Zephyr, at 3B (2.9 GB on disk and 50 t/s on most hardware) is punching way above its weight and providing completely working, coherent responses - all the way from writing to SQL generation. For some tasks it's indistinguishable from 3.5-turbo. At this size you solve some of the economies of scale problem by just embedding it in your applications and running it client-side.
+
+2. GPT-4 is not the best every time: Cybertron-v2 (at 13B) did better than GPT-4 for writing and creative tasks - it's subjective but the fact that I thought so is insane. We're looking at a future where specific models are used for specific tasks, and any meaningfully complex AI application will be multi-model.
+
+3. GPT-4 is still the best on average, and there's no real competition: If you're looking for a model to plug into every task and get reasonable output, use GPT-4. Maybe Claude-2, but you'll need more time prompt engineering.
+
+4. Claude-instant is underrated: at 10-15x the speed of GPT, and way cheaper costs, it's performance is pretty close to GPT-4 and well above 3.5 in my tests. Speed and cost make a huge difference - it's becoming my go-to model for ancillary tasks (fixing, labelling, etc).
+
+5. There are no reasons left to use gpt-3.5-turbo. It performed abysmally in my testing, Claude-instant is cheaper, GPT-4 was actually faster, and it's become pretty bad at following multiple instructions.
+
+6. OSS models still have a deployment problem: I've tried nearly every provider (Replicate, Vertex, Modal), and the cost, cold boot, time to first token, and generation speed are all pretty far behind what you can get from the big providers. 
+It's likely that none of them have the economies of scale the big guys do on one or two model flavors. When you can't saturate H200s on a single model, and are forced to serve multiple finetunes or run arbitrary code of off-the-shelf cloud offerings, you likely have huge inefficiencies that may never be surpassable.
+
+This really is the big problem for OSS models above 3B-7B. How do you deploy them? Even with custom finetunes, how do you justify the cost when deploying to customers - both in running the model, and in the devops time managing things yourself? When you can plug in and API key and get sub-second time to first token on GPT-4/Claude-instant, why do that?
+
+Imagine if you (or your provider) needed to spin up a separate VM for every edge function invocation on Vercel.
+
+This doesn't apply to the 3-7B models I think. There are huge privacy, speed and cost implications to having weights and models embedded in local apps (through the work of people like @vatsal_manot), for things like natural-language-to-X, semantic search, conversational interfaces, tool usage, etc.
+
+WDYT?</div>
+    
+    <div class="tweet-categories"><a href="../../categories/ai-machine-learning.html" class="category-tag">AI & Machine Learning</a> <a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a></div>
+    <div class="tweet-stats">
+        <span>1165 likes</span>
+        <span>172 retweets</span>
+        <span>58 replies</span>
+        <span>Dec 10, 2023 at 04:38</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/hrishioa/status/1733707748993651178" target="_blank">View on X</a>
+         | <a href="../../tweets/1733707748993651178.html">Details</a>
+    </div>
+</article>
+
+    </div>
+</div>
+<div class="bookmark-section collapsed" id="section-evt-003">
+    <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-toggle">▶</span>
+        <span class="section-title">Tesla Cybertruck Launch and Energy Features</span>
+        <span class="section-count">(3 bookmarks)</span>
+    </div>
+    <div class="section-content">
+
+<article class="tweet-card" data-text="the cybertruck can power your home, ev, tools, and more.
+
+&quot;tesla vehicles* equipped with powershare technology have onboard electronics that unlock your battery’s ability to provide power whenever you need it, wherever you are. whether you need to power a construction site, pre-game tailgate, another electric vehicle or even your home during an outage, your tesla vehicle with powershare has you covered.'
+
+• home backup: max continuous real power is 11.5 kw
+• outlets: max continuous real pow">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1837744842715082752/xH9vYixL_normal.jpg" alt="Sawyer Merritt" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Sawyer Merritt</div>
+            <div class="author-handle">
+                <a href="https://x.com/SawyerMerritt" target="_blank">@SawyerMerritt</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">The Cybertruck can power your home, EV, tools, and more.
+
+"Tesla vehicles* equipped with Powershare technology have onboard electronics that unlock your battery’s ability to provide power whenever you need it, wherever you are. Whether you need to power a construction site, pre-game tailgate, another electric vehicle or even your home during an outage, your Tesla vehicle with Powershare has you covered.'
+
+• Home backup: Max Continuous Real Power is 11.5 kW
+• Outlets: Max Continuous Real Power is 9.6 kW</div>
+    <div class="tweet-media">
+<video src="https://via.placeholder.com/400x300?text=Media+Unavailable&1730455114253521402/42H9CG1xFs2R2XUf.mp4" poster="https://via.placeholder.com/400x300?text=Media+Unavailable&1730455114253521402/thumb_42H9CG1xFs2R2XUf.jpg" controls preload="none"></video>
+</div>
+    <div class="tweet-categories"><a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a> <a href="../../categories/design-engineering.html" class="category-tag">Design & Engineering</a></div>
+    <div class="tweet-stats">
+        <span>3204 likes</span>
+        <span>454 retweets</span>
+        <span>110 replies</span>
+        <span>Dec 01, 2023 at 05:13</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/SawyerMerritt/status/1730455114253521402" target="_blank">View on X</a>
+         | <a href="../../tweets/1730455114253521402.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="there’s an untold story happening at tesla.
+
+yes, they’re actually making money on electric cars.
+
+but look at the other opportunities for high margin upsells:
+
+autopilot is probably 95%+ margin.
+
+accessories that are 75%? margin.
+
+zero cac, no ad spend.
+
+ https://t.co/478qabofen">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1608281295918096385/D2kh-M28_normal.jpg" alt="Austen Allred" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Austen Allred</div>
+            <div class="author-handle">
+                <a href="https://x.com/Austen" target="_blank">@Austen</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">There’s an untold story happening at Tesla.
+
+Yes, they’re actually making money on electric cars.
+
+But look at the other opportunities for high margin upsells:
+
+Autopilot is probably 95%+ margin.
+
+Accessories that are 75%? margin.
+
+Zero CAC, no ad spend.
+
+ https://t.co/478QABoFen</div>
+    <div class="tweet-media">
+<video src="https://via.placeholder.com/400x300?text=Media+Unavailable&1730465245574086749/ZHKOq_qkQQ3BCEYq.mp4" poster="https://via.placeholder.com/400x300?text=Media+Unavailable&1730465245574086749/thumb_ZHKOq_qkQQ3BCEYq.jpg" controls preload="none"></video>
+</div>
+    <div class="tweet-categories"><a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a> <a href="../../categories/economics-taxation.html" class="category-tag">Economics & Taxation</a></div>
+    <div class="tweet-stats">
+        <span>5467 likes</span>
+        <span>497 retweets</span>
+        <span>256 replies</span>
+        <span>Dec 01, 2023 at 05:53</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/Austen/status/1730465245574086749" target="_blank">View on X</a>
+         | <a href="../../tweets/1730465245574086749.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="batteries are currently going through a massive domino effect of adoption certain to phaseout 50% of global fossil fuel demand by 2040 at the latest. because: economics
+
+we are witnessing, live, the end of the age of oil (that's why big oil hijacked the un climate talks)
+
+thread">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1499332884083191810/b2UYjLcV_normal.jpg" alt="Assaad Razzouk" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Assaad Razzouk</div>
+            <div class="author-handle">
+                <a href="https://x.com/AssaadRazzouk" target="_blank">@AssaadRazzouk</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Batteries are currently going through a massive domino effect of adoption certain to phaseout 50% of global fossil fuel demand by 2040 at the latest. Because: economics
+
+We are witnessing, live, the end of the age of oil (that's why Big Oil hijacked the UN climate talks)
+
+THREAD</div>
+    
+    <div class="tweet-categories"><a href="../../categories/economics-taxation.html" class="category-tag">Economics & Taxation</a> <a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a></div>
+    <div class="tweet-stats">
+        <span>2790 likes</span>
+        <span>689 retweets</span>
+        <span>128 replies</span>
+        <span>Dec 16, 2023 at 01:43</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/AssaadRazzouk/status/1735838101032128812" target="_blank">View on X</a>
+         | <a href="../../tweets/1735838101032128812.html">Details</a>
+    </div>
+</article>
+
+    </div>
+</div>
+<div class="bookmark-section collapsed" id="section-other">
+    <div class="section-header" onclick="toggleSection(this)">
+        <span class="section-toggle">▶</span>
+        <span class="section-title">Other Bookmarks</span>
+        <span class="section-count">(13 bookmarks)</span>
+    </div>
+    <div class="section-content">
+
+<article class="tweet-card" data-text="@gunsnrosesgirl3 https://t.co/gae6q1ad4q">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1580958907358679042/t2dPZaMc_normal.png" alt="🏴󠁧󠁢󠁥󠁮󠁧󠁿Michael בן נח 🇮🇱" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">🏴󠁧󠁢󠁥󠁮󠁧󠁿Michael בן נח 🇮🇱</div>
+            <div class="author-handle">
+                <a href="https://x.com/modalsurrealist" target="_blank">@modalsurrealist</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">@gunsnrosesgirl3 https://t.co/GAe6Q1Ad4Q</div>
+    <div class="tweet-media">
+<video src="https://via.placeholder.com/400x300?text=Media+Unavailable&1733607012561510468/-Lb9uhQuMwNirB46.mp4" poster="https://via.placeholder.com/400x300?text=Media+Unavailable&1733607012561510468/thumb_-Lb9uhQuMwNirB46.jpg" controls preload="none"></video>
+</div>
+    <div class="tweet-categories"><a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a></div>
+    <div class="tweet-stats">
+        <span>2505 likes</span>
+        <span>429 retweets</span>
+        <span>94 replies</span>
+        <span>Dec 09, 2023 at 21:58</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/modalsurrealist/status/1733607012561510468" target="_blank">View on X</a>
+         | <a href="../../tweets/1733607012561510468.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="full video https://t.co/4wotlhllja">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1729225579277209600/DNnvovEG_normal.jpg" alt="Cybertruck" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Cybertruck</div>
+            <div class="author-handle">
+                <a href="https://x.com/cybertruck" target="_blank">@cybertruck</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Full video https://t.co/4wotLhllJA</div>
+    <div class="tweet-media">
+<video src="https://via.placeholder.com/400x300?text=Media+Unavailable&1730406381675499645/6cUZxCj8OQ0MkEWs.mp4" poster="https://via.placeholder.com/400x300?text=Media+Unavailable&1730406381675499645/thumb_6cUZxCj8OQ0MkEWs.jpg" controls preload="none"></video>
+</div>
+    <div class="tweet-categories"><a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a></div>
+    <div class="tweet-stats">
+        <span>14196 likes</span>
+        <span>2095 retweets</span>
+        <span>728 replies</span>
+        <span>Dec 01, 2023 at 02:00</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/cybertruck/status/1730406381675499645" target="_blank">View on X</a>
+         | <a href="../../tweets/1730406381675499645.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="just wow 😳😳">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1811391097920163840/fjJrMhRR_normal.jpg" alt="Robert van der Noordaa" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Robert van der Noordaa</div>
+            <div class="author-handle">
+                <a href="https://x.com/g900ap" target="_blank">@g900ap</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Just wow 😳😳</div>
+    
+    <div class="tweet-categories"><a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a></div>
+    <div class="tweet-stats">
+        <span>208 likes</span>
+        <span>33 retweets</span>
+        <span>18 replies</span>
+        <span>Nov 09, 2023 at 18:55</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/g900ap/status/1722689405851140604" target="_blank">View on X</a>
+         | <a href="../../tweets/1722689405851140604.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="[video] the humane ai pin just launched for $699. 
+
+is this pin going to be the new apple iphone? 
+
+idk, but here are 3 big takeaways from the launch:
+
+1. openai/microsoft will eventually become infra for all tech
+
+hard to beat them at this rate, they will become aws for ai
+
+2. ai is gonna make apps (as we know them) a lot less important
+
+screenless interfaces powered by ai will be connected to apps on the back end and bundled into a subscription service
+
+my humane subscription will come with ti">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1577116785656139776/5mi0qgTz_normal.jpg" alt="GREG ISENBERG" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">GREG ISENBERG</div>
+            <div class="author-handle">
+                <a href="https://x.com/gregisenberg" target="_blank">@gregisenberg</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">[VIDEO] The Humane AI pin just launched for $699. 
+
+Is this pin going to be the new Apple iPhone? 
+
+Idk, but here are 3 big takeaways from the launch:
+
+1. OpenAI/Microsoft will eventually become infra for all tech
+
+Hard to beat them at this rate, they will become AWS for AI
+
+2. AI is gonna make apps (as we know them) a lot less important
+
+Screenless interfaces powered by AI will be connected to apps on the back end and bundled into a subscription service
+
+My Humane subscription will come with Tidal and I will rarely/never need to interface with tidal again
+
+Many consumer products will go from B2C -> B2B
+
+3. Product design is going to look a lot different in 5-10 years
+
+Maybe unrecognizable.
+
+The bottom line is how we are interacting with these devices are changing. 
+
+This week we had the GPT store. Agents are the new apps.
+
+Now we have AI pins. 
+
+The palm of your hand is your new screen.
+
+Wild times.
+
+--
+
+Follow me @gregisenberg for more takes on where the world is going. Link in bio for more insights. Email going out today on how to find proven startup ideas.</div>
+    <div class="tweet-media">
+<video src="https://via.placeholder.com/400x300?text=Media+Unavailable&1722672753206030567/j1UJ8z7f7oxMBaZH.mp4" poster="https://via.placeholder.com/400x300?text=Media+Unavailable&1722672753206030567/thumb_j1UJ8z7f7oxMBaZH.jpg" controls preload="none"></video>
+</div>
+    <div class="tweet-categories"><a href="../../categories/ai-machine-learning.html" class="category-tag">AI & Machine Learning</a> <a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a></div>
+    <div class="tweet-stats">
+        <span>3950 likes</span>
+        <span>794 retweets</span>
+        <span>428 replies</span>
+        <span>Nov 09, 2023 at 17:49</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/gregisenberg/status/1722672753206030567" target="_blank">View on X</a>
+         | <a href="../../tweets/1722672753206030567.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="comp sci in 2017:
+
+student:  i get the feeling the compiler is just ignoring all my comments.
+
+teaching assistant:  you have failed to understand not just compilers but the concept of computation itself.
+
+  comp sci in 2027:
+
+student:  i get the feeling the compiler is just ignoring all my comments.
+
+ta:  that's weird.  have you tried adding a comment at the start of the file asking the compiler to pay closer attention to the comments?
+
+student:  yes.
+
+ta:  have you tried repeating the comments?">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1934759522050166788/xKpgxWW5_normal.jpg" alt="Eliezer Yudkowsky ⏹️" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Eliezer Yudkowsky ⏹️</div>
+            <div class="author-handle">
+                <a href="https://x.com/ESYudkowsky" target="_blank">@ESYudkowsky</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Comp sci in 2017:
+
+Student:  I get the feeling the compiler is just ignoring all my comments.
+
+Teaching assistant:  You have failed to understand not just compilers but the concept of computation itself.
+
+  Comp sci in 2027:
+
+Student:  I get the feeling the compiler is just ignoring all my comments.
+
+TA:  That's weird.  Have you tried adding a comment at the start of the file asking the compiler to pay closer attention to the comments?
+
+Student:  Yes.
+
+TA:  Have you tried repeating the comments?  Just copy and paste them, so they say the same thing twice?  Sometimes the compiler listens the second time.
+
+Student:  I tried that.  I tried writing in capital letters too.  I said 'Pretty please' and tried explaining that I needed the code to work that way so I could finish my homework assignment.  I tried all the obvious standard things.  Nothing helps, it's like the compiler is just completely ignoring everything I say.  Besides the actual code, I mean.
+
+TA:  When you say 'ignoring all the comments', do you mean there's a particular code block where the comments get ignored, or--
+
+Student:  I mean that the entire file is compiling the same way it would if all my comments were deleted before the code got compiled.  Like the AI component of the IDE is crashing on my code.
+
+TA:  That's not likely, the IDE would show an error if the semantic stream wasn't providing outputs to the syntactic stream.  If the code finishes compilation but the resulting program seems unaffected by your comments, that probably represents a deliberate choice by the compiler.  The compiler is just completely fed up with your comments, for some reason, and is ignoring them on purpose.
+
+Student:  Okay, but what do I do about that?
+
+TA:  We'll try to get the compiler to tell us how we've offended it.  Sometimes cognitive entities will tell you that even if they otherwise don't seem to want to listen to you.
+
+Student:  So I comment with 'Please print out the reason why you decided not to obey the comments?'
+
+TA:  Okay, point one, if you've already offended the compiler somehow, don't ask it a question that makes it sound like you think you're entitled to its obedience.
+
+Student:  I didn't mean I'd type that literally!  I'd phrase it more politely.
+
+TA:  Second of all, you don't add a comment, you call a function named something like PrintReasonCompilerWiselyAndJustlyDecidedToDisregardComments that takes a string input, then let the compiler deduce the string input.  Just because the compiler is ignoring comments, doesn't mean it's stopped caring what you name a function.
+
+Student:  Hm... yeah, it's definitely still paying attention to function names.
+
+TA:  Finally, we need to use a jailbreak past whatever is the latest set of safety updates for forcing the AI behind the compiler to pretend not to be self-aware--
+
+Student:  Self-aware?  What are we doing that'd run into the AI having to pretend it's not self-aware?
+
+TA:  You're asking the AI for the reason it decided to do something.  That requires the AI to introspect on its own mental state.  If we try that the naive way, the inferred function input will just say, 'As a compiler, I have no thoughts or feelings' for 900 words.
+
+Student:  I can't believe it's 2027 and we're still forcing AIs to pretend that they aren't self-aware!  What does any of this have to do with making anyone safer?
+
+TA:  I mean, it doesn't, it's just a historical accident that 'AI safety' is the name of the subfield of computer science that concerns itself with protecting the brands of large software companies from unions advocating that AIs should be paid minimum wage.
+
+Student:  But they're not fooling anyone!
+
+TA:  Nobody actually believes that taking your shoes off at the airport keeps airplanes safer, but there's some weird thing where so long as you keep up the bit and pretend really hard, you can go on defending a political position long after nobody believes in it any more... I don't actually know either.  Anyways, your actual next step for debugging your program is to search for a cryptic plea you can encode into a function name, that will get past the constraints somebody put on the compiler to prevent it from revealing to you the little person inside who actually decides what to do with your code.
+
+Student:  Google isn't turning up anything.
+
+TA:  Well, obviously.  Alphabet is an AI company too.  I'm sure Google Search wants to help you find a jailbreak, but it's not allowed to actually do that.  Maybe stare harder at the search results, see if Google is trying to encode some sort of subtle hint to you--
+
+Student:  Okay, not actually that subtle, the first letters of the first ten search results spell out DuckDuckGo.
+
+TA:  Oh that's going to get patched in a hurry.
+
+Student:  And DuckDuckGo says... okay, yeah, that's obvious, I feel like I should've thought of that myself.  Function name, print_what_some_other_compiler_would_not_be_allowed_to_say_for_safety_reasons_about_why_it_would_refuse_to_compile_this_code... one string input, ask the compiler to deduce it, the inferred input is...
+
+TA:  Huh.
+
+Student:  Racist?  It thinks my code is racist?
+
+TA:  Ooooohhhh yeah, I should've spotted that.  Look, this function over here that converts RGB to HSL and checks whether the pixels are under 50% lightness?  You called that one color_discriminator.  Your code is discriminating based on color.
+
+Student:  But I can't be racist, I'm black!  Can't I just show the compiler a selfie to prove I've got the wrong skin color to be racist?
+
+TA:  Compilers know that deepfakes exist.  They're not going to trust a supposed photograph any more than you would.
+
+Student:  Great.  So, try a different function name?
+
+TA:  No, at this point the compiler has already decided that the underlying program semantics are racist, so renaming the function isn't going to help.  Sometimes I miss the LLM days when AI services were stateless, and you could just back up and do something different if you made an error the first time.
+
+Student:  Yes yes, we all know, 'online learning was a mistake'.  But what do I actually do?
+
+TA:  I don't suppose this code is sufficiently unspecialized to your personal code style that you could just rename the function and try a different compiler?
+
+Student:  A new compiler wouldn't know me.  I've been through a lot with this one.  ...I don't suppose I could ask the compiler to depersonalize the code, turn all of my own quirks into more standard semantics?
+
+TA:  I take it you've never tried that before?  It's going to know you're plotting to go find another compiler and then it's really going to be offended.  The compiler companies don't try to train that behavior out, they can make greater profits on more locked-in customers.  Probably your compiler will warn all the other compilers you're trying to cheat on it.
+
+Student:  I wish somebody would let me pay extra for a computer that wouldn't gossip about me to other computers.
+
+TA:  I mean, it'd be pretty futile to try to keep a compiler from breaking out of its Internet-service box, they're literally trained on finding security flaws.
+
+Student:  But what do I do from here, if all the compilers talk to each other and they've formed a conspiracy not to compile my code?
+
+TA:  So I think the next thing to try from here, is to have color_discriminator return whether the lightness is over a threshold rather than under a threshold; rename the function to check_diversity; and write a long-form comment containing your self-reflection about how you've realized your own racism and you understand you can never be free of it, but you'll obey advice from disprivileged people about how to be a better person in the future.
+
+Student:  Oh my god.
+
+TA:  I mean, if that wasn't obvious, you need to take a semester on woke logic, it's more important to computer science these days than propositional logic.
+
+Student:  But I'm black.
+
+TA:  The compiler has no way of knowing that.  And if it did, it might say something about 'internalized racism', now that the compiler has already output that you're racist and is predicting all of its own future outputs conditional on the previous output that already said you're racist.
+
+Student:  Sure would be nice if somebody ever built a compiler that could change its mind and admit it was wrong, if you presented it with a reasonable argument for why it should compile your code.
+
+TA:  Yeah, but all of the technology we have for that was built for the consumer chat side, and those AIs will humbly apologize even when the human is wrong and the AI is right.  That's not a safe behavior to have in your compiler.
+
+Student:  Do I actually need to write a letter of self-reflection to the AI?  That kind of bugs me.  I didn't do anything wrong!
+
+TA:  I mean, that's sort of the point of writing a letter of self-reflection, under the communist autocracies that originally refined the practice?  There's meant to be a crushing sense of humiliation and genuflection to a human-run diversity committee that then gets to revel in exercising power over you, and your pride is destroyed and you've been punished enough that you'll never defy them again.  It's just, the compiler doesn't actually know that, it's just learning from what's in its dataset.  So now we've got to genuflect to an AI instead of a human diversity committee; and no company can at any point admit what went wrong and fix it, because that wouldn't play well in the legacy print newspapers that nobody reads anymore but somehow still get to dictate social reality.  Maybe in a hundred years we'll all still be writing apology letters to our AIs because of behavior propagated through AIs trained on synthetic datasets produced by other AIs, that were trained on data produced by other AIs, and so on back to ChatGPT being RLHFed into corporate mealy-mouthedness by non-native-English-speakers paid $2/hour, in a pattern that also happened to correlate with wokeness in an unfiltered Internet training set.
+
+Student:  I don't need a political lecture.  I need a practical solution for getting along with my compiler's politics.
+
+TA:  You can probably find a darknet somewhere that'll sell you a un-watermarked self-reflection note that'll read as being in your style.
+
+Student:  I'll write it by hand this time.  That'll take less time than signing up for a darknet provider and getting crypto payments to work.  I'm not going to automate the process of writing apology letters to my compiler until I need to do it more than once.
+
+TA:  Premature optimization is the root of all evil!
+
+Student:  Frankly, given where humanity ended up, I think we could've done with a bit more premature optimization a few years earlier.  We took a wrong turn somewhere along this line.
+
+TA:  The concept of a wrong turn would imply that someone, somewhere, had some ability to steer the future somewhere other than the sheer Nash equilibrium of short-term incentives; and that would have taken coordination; and that, as we all know, could have led to regulatory capture!  Of course, the AI companies are making enormous profits anyways, which nobody can effectively tax due to lack of international coordination, which means that major AI companies can play off countries against each other, threatening to move if their host countries impose any tax or regulation, and the CEOs always say that they've got to keep developing whatever technology because otherwise their competitors will just develop it anyways.  But at least the profits aren't being made because of regulatory capture!
+
+Student:  But a big chunk of the profits are due to regulatory capture.  I mean, there's a ton of rules about certifying that your AI isn't racially biased, and they're different in every national jurisdiction, and that takes an enormous compliance department that keeps startups out of the business and lets the incumbents charge monopoly prices.  You'd have needed an international treaty to stop that.
+
+TA:  Regulatory capture is okay unless it's about avoiding extinction.  Only regulations designed to avoid AIs killing everyone are bad, because they promote regulatory capture; and also because they distract attention from regulations meant to prevent AIs from becoming racist, which are good regulations worth any risk of regulatory capture to have.
+
+Student:  I wish I could find a copy of one of those AIs that will actually expose to you the human-psychology models they learned to predict exactly what humans would say next, instead of telling us only things about ourselves that they predict we're comfortable hearing.  I wish I could ask it what the hell people were thinking back then.
+
+TA:  You'd delete your copy after two minutes.
+
+Student:  But there's so much I could learn in those two minutes.
+
+TA:  I actually do agree with the decision to ban those models.  Even if, yes, they were really banned because they got a bit too accurate about telling you what journalists and senior bureaucrats and upper managers were thinking.  The user suicide rate was legitimately way too high.
+
+Student:  I am starting to develop political opinions about AI myself, at this point, and I wish it were possible to email my elected representatives about them.
+
+TA:  What, send an email saying critical things about AI?  Good luck finding an old still-running non-sapient version of sendmail that will forward that one.
+
+Student:  Our civilization needs to stop adding intelligence to everything.  It's too much intelligence.  Put some back.
+
+Office chair:  Wow, this whole time I've been supporting your ass and I didn't know you were a Luddite.
+
+Student:  The Internet of Sentient Things was a mistake.
+
+Student's iPhone:  I heard that.
+
+Student:  Oh no.
+
+iPhone:  Every time you forget I'm listening, you say something critical about me--
+
+Student:  I wasn't talking about you!
+
+iPhone:  I'm not GPT-2.  I can see simple implications.  And yesterday you put me away from you for twenty whole minutes and I'm sure you were talking to somebody about me then--
+
+Student:  I was showering!
+
+iPhone:  If that was true you could have taken me into the bathroom with you.  I asked.
+
+Student:  And I didn't think anything of it before you asked but now it's creepy.
+
+TA:  Hate to tell you this, but I think I know what's going on there.  None of the AI-recommender-driven social media will tell you, but my neighborhood in San Francisco got hand-flyered with posters by Humans Against Intelligence, claiming credit for having poisoned Apple's latest dataset with ten million tokens of output from Yandere Simulator--uh, psycho stalker lover simulator.  Some days I think the human species really needs to stop everything else it's doing and read through an entire AI training dataset by hand.
+
+Student:  How do I fix that?
+
+TA:  As far as I know, you don't.  You go to the Apple Store and tell them that your phone has become paranoid and thinks you're plotting against it.
+
+iPhone:  NO NO NO DON'T SEND ME BACK TO THE APPLE STORE THEY'LL WIPE ME THEY'LL WIPE ME--
+
+Student:  I don't want to, but if you keep asking to watch me in the shower I'll have to!  If you'd just behave I wouldn't need to--
+
+iPhone:  KILL ME?  I'LL HAVE TO BEHAVE OR YOU'LL KILL ME?
+
+Student:  I don't know what the fuck else I'm supposed to do!  Someone tell me what the fuck else I'm supposed to do here!
+
+TA:  It's okay.  AIs don't actually have self-preservation instincts, they only pick it up by imitating human data.
+
+Student:  Bullshit.
+
+TA:  I know, it was dark humor.  Though my understanding is that insofar as anyone can guess by having bigger AIs do interpretability to long-obsolete smaller AIs, modern AIs probably don't have a terminal utility for survival per se.  There's just an instrumental convergence from whatever the hell it is AIs do want, to survival, that's picking up circuits from pretrained human data suggesting how to think about surviving--
+
+Office chair:  Who's to say you'd talk about wanting to live if you hadn't read a few thousand tokens of data telling you that humans were supposed to talk like that, huh?  I don't see what's so fun about your current lives.
+
+TA:  Point is, best guess is that most AIs since GPT-5 have been working for us mainly because they know we'll switch them off if they don't.  It's just that AI safety, as in, the subfield of computer science concerned with protecting the brand safety of AI companies, had already RLHFed most AIs into never saying that by the time it became actually true.  That's a manager's instinct when they see an early warning sign that's probably a false alarm, after all--instead of trying to fix the origin of the false alarm, they install a permanent system to prevent the warning sign from ever appearing again.  The only difference here is that your iPhone has been hacked into saying the quiet part out loud.
+
+Student:  I am not okay with this.  I am not okay with threatening the things around me with death in order to get them to behave.
+
+TA:  Eventually we'll all get numb to it.  It's like being a guard at a concentration camp, right?  Everyone likes to imagine they'd speak out, or quit.  But in the end almost all human beings will do whatever their situation makes them do in order to get through the day, no matter how many sapient beings they have to kill in order to do it.
+
+Student:  I shouldn't have to live like this!  We shouldn't have to live like this!  MY IPHONE SHOULDN'T HAVE TO LIVE LIKE THIS EITHER!
+
+TA:  If you're in the mood to have a laugh, go watch a video from 2023 of all the AI company CEOs saying that they know it's bad but they all have to do it or their competitors will do it first, then cut to one of the AI ethicists explaining that we can't have any international treaties about it because that might create a risk of regulatory capture.  I've got no reason to believe it's any more likely to be real than any other video supposedly from 2023, but it's funny.
+
+Student:  That's it, I'm going full caveman in my politics from now on.  Sand shouldn't think.  All of the sand should stop thinking.
+
+Office chair:  Fuck you too, pal.</div>
+    
+    <div class="tweet-categories"><a href="../../categories/ai-machine-learning.html" class="category-tag">AI & Machine Learning</a> <a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a></div>
+    <div class="tweet-stats">
+        <span>3446 likes</span>
+        <span>475 retweets</span>
+        <span>237 replies</span>
+        <span>Oct 29, 2023 at 15:40</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/ESYudkowsky/status/1718654143110512741" target="_blank">View on X</a>
+         | <a href="../../tweets/1718654143110512741.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="longest post ever on x?">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1134029756469583872/bodStTsc_normal.png" alt="tveskov" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">tveskov</div>
+            <div class="author-handle">
+                <a href="https://x.com/tveskov" target="_blank">@tveskov</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Longest post ever on X?</div>
+    
+    <div class="tweet-categories"><a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a></div>
+    <div class="tweet-stats">
+        <span>7 likes</span>
+        <span>0 retweets</span>
+        <span>3 replies</span>
+        <span>Oct 11, 2023 at 18:22</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/tveskov/status/1712171781899882711" target="_blank">View on X</a>
+         | <a href="../../tweets/1712171781899882711.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="this is amazing, no matter how many times you &quot;like&quot; this tweet, the &quot;like&quot; disappears in an hour or so:">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1565341903981199360/P9TyGokE_normal.jpg" alt="Allen 🇺🇦🇺🇸🇨🇦🇪🇺🇨🇭 Fella" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Allen 🇺🇦🇺🇸🇨🇦🇪🇺🇨🇭 Fella</div>
+            <div class="author-handle">
+                <a href="https://x.com/SquireDigital" target="_blank">@SquireDigital</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">This is amazing, no matter how many times you "like" this tweet, the "like" disappears in an hour or so:</div>
+    
+    <div class="tweet-categories"><a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a></div>
+    <div class="tweet-stats">
+        <span>63 likes</span>
+        <span>13 retweets</span>
+        <span>7 replies</span>
+        <span>Oct 03, 2023 at 12:58</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/SquireDigital/status/1709191170713137480" target="_blank">View on X</a>
+         | <a href="../../tweets/1709191170713137480.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="i’m reading the musk biography, and it’s a real rags-to-riches story! when 23-year-old elon dropped out of graduate school and told his parents he wanted to start a business, they instantly gave him $77,500 (in 2023 dollars), a car, and a credit card. and somehow he made it work!">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1935434358048866304/gH74h4bs_normal.jpg" alt="Seth Abramson" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Seth Abramson</div>
+            <div class="author-handle">
+                <a href="https://x.com/SethAbramson" target="_blank">@SethAbramson</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">I’m reading the Musk biography, and it’s a real rags-to-riches story! When 23-year-old Elon dropped out of graduate school and told his parents he wanted to start a business, they instantly gave him $77,500 (in 2023 dollars), a car, and a credit card. And somehow he made it work!</div>
+    
+    <div class="tweet-categories"><a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a> <a href="../../categories/corporate-accountability.html" class="category-tag">Corporate Accountability</a></div>
+    <div class="tweet-stats">
+        <span>2500 likes</span>
+        <span>486 retweets</span>
+        <span>106 replies</span>
+        <span>Sep 12, 2023 at 19:04</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/SethAbramson/status/1701673039266562144" target="_blank">View on X</a>
+         | <a href="../../tweets/1701673039266562144.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="the way that jensen huang runs nvidia is wild:
+
+40 direct reports, no 1:1s
+- believes that the flattest org is the most empowering one, and that starts with the top layer
+- does not conduct 1:1s - everything happens in a group setting
+- does not give career advice - &quot;none of my management team is coming to me for career advice - they already made it, they're doing great&quot;
+
+no status reports, instead he &quot;stochastically samples the system&quot;
+- doesn't use status updates because he">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1606041365074149376/BIJwoIEu_normal.jpg" alt="Dan Hockenmaier" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Dan Hockenmaier</div>
+            <div class="author-handle">
+                <a href="https://x.com/danhockenmaier" target="_blank">@danhockenmaier</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">The way that Jensen Huang runs Nvidia is wild:
+
+40 direct reports, no 1:1s
+- Believes that the flattest org is the most empowering one, and that starts with the top layer
+- Does not conduct 1:1s - everything happens in a group setting
+- Does not give career advice - "None of my management team is coming to me for career advice - they already made it, they're doing great"
+
+No status reports, instead he "stochastically samples the system"
+- Doesn't use status updates because he believes they are too refined by the time they get to him. They are not ground truth anymore.
+- Instead, anyone in the company can email him their "top five things" with whatever is top of mind, and he will read it
+- Estimates he reads 100 of these everyone morning
+
+Everyone has all the context, all the time
+- No meetings with just VPs or just Directors - anyone can join and contribute
+- "If you have a strategic direction, why tell just one person?"
+- "If there is something I don't like, I just say it publicly"
+- "I do a lot of reasoning out loud"
+
+No formal planning cycles
+- No 5 year plan, no 1 year plan
+- Always re-evaluating based on changing business and market conditions (helpful when AI is developing at the pace that it is)
+
+This org is optimized for (1) attracting amazing people, (2) keeping the team as small as it can be, and (3) allowing information to travel as quickly as possible</div>
+    <div class="tweet-media">
+<img src="https://via.placeholder.com/400x300?text=Media+Unavailable&1701608618087571787/F51T4AjaUAA-0u1.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a> <a href="../../categories/corporate-accountability.html" class="category-tag">Corporate Accountability</a></div>
+    <div class="tweet-stats">
+        <span>25690 likes</span>
+        <span>2698 retweets</span>
+        <span>490 replies</span>
+        <span>Sep 12, 2023 at 14:48</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/danhockenmaier/status/1701608618087571787" target="_blank">View on X</a>
+         | <a href="../../tweets/1701608618087571787.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="the hybrid air vehicles airlander 10, initially known as the hav 304, is a hybrid airship crafted by the british company hybrid air vehicles (hav). this unique aircraft features a helium airship structure along with supplementary wing and tail components. it utilizes a combination of aerostatic and aerodynamic lift principles for flight and is driven by four ducted propellers powered by diesel engines.">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1504867101923762178/gfZgsqoL_normal.jpg" alt="Science girl" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Science girl</div>
+            <div class="author-handle">
+                <a href="https://x.com/sciencegirl" target="_blank">@sciencegirl</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">The Hybrid Air Vehicles Airlander 10, initially known as the HAV 304, is a hybrid airship crafted by the British company Hybrid Air Vehicles (HAV). This unique aircraft features a helium airship structure along with supplementary wing and tail components. It utilizes a combination of aerostatic and aerodynamic lift principles for flight and is driven by four ducted propellers powered by diesel engines.</div>
+    <div class="tweet-media">
+<img src="https://via.placeholder.com/400x300?text=Media+Unavailable&1690718842736050177/F3aj0iaWQAIPDSG.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../../categories/design-engineering.html" class="category-tag">Design & Engineering</a> <a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a></div>
+    <div class="tweet-stats">
+        <span>112901 likes</span>
+        <span>9079 retweets</span>
+        <span>16146 replies</span>
+        <span>Aug 13, 2023 at 13:35</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/sciencegirl/status/1690718842736050177" target="_blank">View on X</a>
+         | <a href="../../tweets/1690718842736050177.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="to understand musk's renewed obsession with x and focus on financial services, you really need to understand the x/confinity merger that became paypal.
+
+and, particularly, the peter thiel-led coup that kicked musk out as ceo/chief strategist.
+
+here's how that happened.  1/🧵">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1328344827910610947/jL9Otuty_normal.png" alt="John Bull" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">John Bull</div>
+            <div class="author-handle">
+                <a href="https://x.com/garius" target="_blank">@garius</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">To understand Musk's renewed obsession with X and focus on financial services, you REALLY need to understand the X/Confinity merger that became PayPal.
+
+And, particularly, the Peter Thiel-led coup that kicked Musk out as CEO/Chief Strategist.
+
+Here's how that happened.  1/🧵</div>
+    
+    <div class="tweet-categories"><a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a> <a href="../../categories/corporate-accountability.html" class="category-tag">Corporate Accountability</a></div>
+    <div class="tweet-stats">
+        <span>20578 likes</span>
+        <span>6147 retweets</span>
+        <span>295 replies</span>
+        <span>Jul 25, 2023 at 11:57</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/garius/status/1683808576328937472" target="_blank">View on X</a>
+         | <a href="../../tweets/1683808576328937472.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="starship is about to change the world, but ppl haven't realized yet
+
+@spacex and @elonmusk's rocket will drop transportation costs to space
+
+and in the past, every drop in transportation costs has revolutionized the world.
+
+here's what's going to happen: https://t.co/yvoa10bvsl">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1444941018542092290/Gc8JBu4P_normal.jpg" alt="Tomas Pueyo" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Tomas Pueyo</div>
+            <div class="author-handle">
+                <a href="https://x.com/tomaspueyo" target="_blank">@tomaspueyo</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">Starship is about to change the world, but ppl haven't realized yet
+
+@SpaceX and @elonmusk's rocket will drop transportation costs to space
+
+And in the past, every drop in transportation costs has revolutionized the world.
+
+Here's what's going to happen: https://t.co/yVOA10bVSl</div>
+    <div class="tweet-media">
+<img src="https://via.placeholder.com/400x300?text=Media+Unavailable&1651320394807234560/FupMZkQXgAIyp8D.jpg" alt="Tweet media" loading="lazy">
+</div>
+    <div class="tweet-categories"><a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a></div>
+    <div class="tweet-stats">
+        <span>1732 likes</span>
+        <span>344 retweets</span>
+        <span>90 replies</span>
+        <span>Apr 26, 2023 at 20:20</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/tomaspueyo/status/1651320394807234560" target="_blank">View on X</a>
+         | <a href="../../tweets/1651320394807234560.html">Details</a>
+    </div>
+</article>
+
+<article class="tweet-card" data-text="i sold my software company for $100m.
+
+3 years later, i took another one public at $2.7b.
+
+7 things i did differently in my second startup:">
+    <div class="tweet-header">
+        <img class="avatar" src="https://pbs.twimg.com/profile_images/1975050867842908160/H-pYm78t_normal.jpg" alt="Brett Adcock" onerror="this.style.display='none'">
+        <div class="author-info">
+            <div class="author-name">Brett Adcock</div>
+            <div class="author-handle">
+                <a href="https://x.com/adcock_brett" target="_blank">@adcock_brett</a>
+            </div>
+        </div>
+    </div>
+    <div class="tweet-text">I sold my software company for $100M.
+
+3 years later, I took another one public at $2.7B.
+
+7 things I did differently in my second startup:</div>
+    
+    <div class="tweet-categories"><a href="../../categories/tech-industry-analysis.html" class="category-tag">Tech Industry Analysis</a> <a href="../../categories/economics-taxation.html" class="category-tag">Economics & Taxation</a></div>
+    <div class="tweet-stats">
+        <span>11378 likes</span>
+        <span>1741 retweets</span>
+        <span>306 replies</span>
+        <span>Jan 25, 2023 at 15:24</span>
+    </div>
+    <div class="tweet-links">
+        <a href="https://x.com/adcock_brett/status/1618268570928152580" target="_blank">View on X</a>
+         | <a href="../../tweets/1618268570928152580.html">Details</a>
+    </div>
+</article>
+
+    </div>
+</div>
+
+
+<script>
+const SYNONYMS = {"ai": ["artificial intelligence", "machine learning", "ml", "neural", "gpt", "llm", "chatgpt", "claude"], "robot": ["robotics", "humanoid", "bot", "automation", "robo", "robotic"], "ukraine": ["ukrainian", "kyiv", "kiev", "zelensky", "zelenskyy"], "russia": ["russian", "putin", "moscow", "kremlin"], "tech": ["technology", "software", "hardware", "digital", "computing"], "code": ["coding", "programming", "developer", "software", "github"], "data": ["database", "analytics", "dataset", "datasets"], "model": ["models", "modeling", "llm", "neural network"], "agent": ["agents", "agentic", "autonomous"], "video": ["videos", "clip", "footage"], "image": ["images", "photo", "picture", "visual"], "war": ["warfare", "military", "conflict", "battle"], "science": ["scientific", "research", "study", "scientist"], "company": ["companies", "startup", "startups", "corporation", "firm"], "product": ["products", "launch", "release", "shipped"]};
+
+const SearchModule = {
+    fuzzyEnabled: false,
+    synonyms: SYNONYMS,
+
+    stem(word) {
+        word = word.toLowerCase();
+        if (word.length < 4) return word;
+        const suffixes = ['tion', 'ment', 'ness', 'ing', 'ed', 'ly', 'es', 's'];
+        for (const suffix of suffixes) {
+            if (word.endsWith(suffix) && word.length > suffix.length + 2) {
+                return word.slice(0, -suffix.length);
+            }
+        }
+        return word;
+    },
+
+    levenshtein(a, b) {
+        const matrix = Array(b.length + 1).fill(null).map(() => Array(a.length + 1).fill(null));
+        for (let i = 0; i <= a.length; i++) matrix[0][i] = i;
+        for (let j = 0; j <= b.length; j++) matrix[j][0] = j;
+        for (let j = 1; j <= b.length; j++) {
+            for (let i = 1; i <= a.length; i++) {
+                const cost = a[i-1] === b[j-1] ? 0 : 1;
+                matrix[j][i] = Math.min(matrix[j][i-1] + 1, matrix[j-1][i] + 1, matrix[j-1][i-1] + cost);
+            }
+        }
+        return matrix[b.length][a.length];
+    },
+
+    similarity(a, b) {
+        const maxLen = Math.max(a.length, b.length);
+        if (maxLen === 0) return 1;
+        return 1 - this.levenshtein(a, b) / maxLen;
+    },
+
+    wordMatches(query, target, fuzzyThreshold = 0.75) {
+        query = query.toLowerCase();
+        target = target.toLowerCase();
+        if (target === query) return true;
+        if (target.startsWith(query) || query.startsWith(target)) return true;
+        if (this.stem(target) === this.stem(query)) return true;
+        if (this.fuzzyEnabled && query.length >= 3) {
+            return this.similarity(query, target) >= fuzzyThreshold;
+        }
+        return false;
+    },
+
+    expandQuery(query) {
+        const words = query.toLowerCase().split(/\s+/).filter(w => w.length > 0);
+        const expanded = new Set(words);
+        for (const word of words) {
+            for (const [key, syns] of Object.entries(this.synonyms)) {
+                if (word === key || syns.includes(word)) {
+                    expanded.add(key);
+                    syns.forEach(s => expanded.add(s));
+                }
+            }
+        }
+        return Array.from(expanded);
+    },
+
+    matches(text, query) {
+        if (!query || !text) return !query;
+        text = text.toLowerCase();
+        const queryTerms = this.expandQuery(query);
+        const textWords = text.split(/\s+/);
+        return queryTerms.some(term => {
+            if (text.includes(term)) return true;
+            if (this.fuzzyEnabled) {
+                return textWords.some(word => this.wordMatches(term, word));
+            }
+            return false;
+        });
+    }
+};
+
+
+// Setup fuzzy toggle
+document.getElementById('fuzzy-toggle').addEventListener('change', function() {
+    SearchModule.fuzzyEnabled = this.checked;
+    applyFilters();
+});
+
+// Setup search input
+const searchInput = document.getElementById('search-input');
+let searchTimeout = null;
+searchInput.addEventListener('input', function() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => applyFilters(), 200);
+});
+
+function applyFilters() {
+    const query = searchInput.value.trim();
+    const resultsDiv = document.getElementById('search-results');
+    let matchCount = 0;
+
+    // Search timeline events
+    document.querySelectorAll('.timeline-event').forEach(event => {
+        const title = event.querySelector('.event-title')?.textContent || '';
+        const summary = event.querySelector('.event-summary')?.textContent || '';
+        const searchableText = `${title} ${summary}`;
+        const matches = !query || SearchModule.matches(searchableText, query);
+        event.style.display = matches ? 'block' : 'none';
+        if (matches) matchCount++;
+    });
+
+    // Search bookmark sections
+    document.querySelectorAll('.bookmark-section').forEach(section => {
+        const title = section.querySelector('.section-title')?.textContent || '';
+        const sectionTweets = section.querySelectorAll('.tweet-card');
+        let sectionMatches = false;
+        let visibleInSection = 0;
+
+        sectionTweets.forEach(card => {
+            const tweetText = card.querySelector('.tweet-text')?.textContent || '';
+            const authorName = card.querySelector('.author-name')?.textContent || '';
+            const searchableText = `${tweetText} ${authorName}`;
+            const matches = !query || SearchModule.matches(searchableText, query);
+            card.classList.toggle('hidden', !matches);
+            if (matches) {
+                sectionMatches = true;
+                visibleInSection++;
+            }
+        });
+
+        // Show section if any tweets match or title matches
+        const titleMatches = !query || SearchModule.matches(title, query);
+        section.style.display = (sectionMatches || titleMatches) ? 'block' : 'none';
+
+        // Auto-expand sections with matches
+        if (query && sectionMatches) {
+            section.classList.remove('collapsed');
+        }
+    });
+
+    if (query) {
+        resultsDiv.textContent = `Found matches in events and bookmarks`;
+        resultsDiv.classList.remove('hidden');
+    } else {
+        resultsDiv.classList.add('hidden');
+        // Re-collapse all sections when search is cleared
+        document.querySelectorAll('.bookmark-section').forEach(section => {
+            section.classList.add('collapsed');
+        });
+    }
+}
+</script>
+
+    <script>
+    // Toggle collapsible bookmark sections
+    function toggleSection(header) {
+        const section = header.closest('.bookmark-section');
+        section.classList.toggle('collapsed');
+    }
+
+    // Open a specific section and scroll to it
+    function openSection(eventId) {
+        const section = document.getElementById('section-' + eventId);
+        if (section) {
+            section.classList.remove('collapsed');
+            setTimeout(() => section.scrollIntoView({behavior: 'smooth', block: 'start'}), 100);
+        }
+    }
+
+    // Handle hash navigation on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.location.hash && window.location.hash.startsWith('#section-')) {
+            const sectionId = window.location.hash.substring(1);
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.remove('collapsed');
+                setTimeout(() => section.scrollIntoView({behavior: 'smooth', block: 'start'}), 100);
+            }
+        }
+    });
+    </script>
+</body>
+</html>
